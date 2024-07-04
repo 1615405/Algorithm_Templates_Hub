@@ -1,45 +1,101 @@
-def multiple_knapsack_naive(volumes, weights, counts, capacity):
+def zero_one_knapsack_naive(volumes, weights, capacity):
     n = len(volumes)
-    # 初始化dp数组，大小为 (n+1) x (capacity+1)，所有值初始化为0
     dp = [[0] * (capacity + 1) for _ in range(n + 1)]
 
-    # 遍历每种物品
     for i in range(1, n + 1):
-        # 遍历背包的每个容量
         for j in range(capacity + 1):
-            # 初始化当前状态不包括当前物品的最大值
+            if j >= volumes[i - 1]:
+                dp[i][j] = max(dp[i-1][j], dp[i-1][j-volumes[i-1]] + weights[i-1])
+            else:
+                dp[i][j] = dp[i-1][j]
+
+    return dp[n][capacity]
+
+
+
+def zero_one_knapsack_optimized1(volumes, weights, capacity):
+    n = len(volumes)
+    dp = [[0] * (capacity + 1) for _ in range(2)]
+
+    for i in range(1, n + 1):
+        for j in range(capacity + 1):
+            dp[i & 1][j] = dp[(i-1) & 1][j]
+            if j >= volumes[i-1]:
+                dp[i & 1][j] = max(dp[i & 1][j], dp[(i-1) & 1][j - volumes[i-1]] + weights[i-1])
+
+    return dp[n & 1][capacity]
+
+
+
+def zero_one_knapsack_optimized2(volumes, weights, capacity):
+    n = len(volumes)
+    dp = [0] * (capacity + 1)
+
+    for i in range(n):
+        for j in range(capacity, volumes[i] - 1, -1):
+            dp[j] = max(dp[j], dp[j - volumes[i]] + weights[i])
+
+    return max(dp)
+
+
+
+
+
+def complete_knapsack_naive(volumes, values, capacity):
+    n = len(volumes)
+    dp = [[0] * (capacity + 1) for _ in range(n + 1)]
+
+    for i in range(1, n + 1):
+        for j in range(capacity + 1):
             dp[i][j] = dp[i-1][j]
-            # 遍历当前物品可以放入的数量，从1开始到最小的物品数量或最大能放入的次数
+            if j >= volumes[i - 1]:
+                dp[i][j] = max(dp[i][j], dp[i][j - volumes[i - 1]] + values[i - 1])
+
+    return dp[n][capacity]
+
+
+
+def complete_knapsack_optimized(volumes, values, capacity):
+    dp = [0] * (capacity + 1)
+    for i in range(len(volumes)):
+        for j in range(volumes[i], capacity + 1):
+            dp[j] = max(dp[j], dp[j - volumes[i]] + values[i])
+
+    return dp[capacity]
+
+
+
+
+
+def multiple_knapsack_naive(volumes, weights, counts, capacity):
+    n = len(volumes)
+    dp = [[0] * (capacity + 1) for _ in range(n + 1)]
+
+    for i in range(1, n + 1):
+        for j in range(capacity + 1):
+            dp[i][j] = dp[i-1][j]
             max_k = min(counts[i-1], j // volumes[i-1])
             for k in range(1, max_k + 1):
-                # 更新dp[i][j]的值，考虑放入k个当前物品
                 dp[i][j] = max(dp[i][j], dp[i-1][j - k * volumes[i-1]] + k * weights[i-1])
 
-    # 返回背包容量为capacity时的最大价值
     return dp[n][capacity]
 
 
 
 def multiple_knapsack_optimized1(volumes, weights, counts, capacity):
     n = len(volumes)
-    # 初始化dp数组，所有值为0（假设-无穷用0表示，因为不可能取负值）
     dp = [0] * (capacity + 1)
 
-    # 遍历每个物品
     for i in range(n):
-        # 对当前物品可用的每个数量
         for j in range(1, counts[i] + 1):
-            # 从大到小更新背包容量，确保不重复计算物品
             for k in range(capacity, volumes[i] - 1, -1):
                 dp[k] = max(dp[k], dp[k - volumes[i]] + weights[i])
 
-    # 寻找最大值
     return max(dp)
 
 
 
 def multiple_knapsack_optimized2(volumes, weights, counts, capacity):
-    # volumes, weights, counts 分别为物品体积、权重和数量列表，capacity为背包容量
     n = len(volumes)
     items = []
 
@@ -92,18 +148,20 @@ def multiple_knapsack_optimized3(volumes, weights, counts, capacity):
     return dp[capacity]
 
 
-if __name__ == "__main__":
-    n, capacity = map(int, input().split())
 
-    volumes = []
-    weights = []
-    counts = []
-    
-    for i in range(n):
-        v, w, c = map(int, input().split())
-        counts.append(c)
-        volumes.append(v)
-        weights.append(w)
-        
-    max_value = multiple_knapsack_naive(volumes, weights, counts, capacity)
-    print(max_value)
+
+
+def group_knapsack(max_capacity, groups_items):
+    dp = [0] * (max_capacity + 1)
+
+    # 遍历所有物品组
+    for items in groups_items:
+        # 逆向遍历背包容量，确保每个物品只被计算一次
+        for current_capacity in range(max_capacity, -1, -1):
+            # 遍历当前组中的每个物品
+            for volume, value in items:
+                if volume <= current_capacity:
+                    dp[current_capacity] = max(dp[current_capacity], dp[current_capacity - volume] + value)
+
+    # 返回最大容量下的最大价值
+    return dp[max_capacity]
