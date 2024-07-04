@@ -1,15 +1,7 @@
 def find_first_blue(left: int, right: int) -> int:
     """
     查找第一个蓝色元素的索引。
-    
     二分查找过程中，不断收缩右边界直到找到第一个蓝色元素。
-    
-    参数:
-        left (int): 查找范围的左边界。
-        right (int): 查找范围的右边界（不包括）。
-    
-    返回:
-        int: 第一个满足蓝色条件的元素的索引。
     """
     while left < right:
         pivot = (left + right) // 2
@@ -20,18 +12,11 @@ def find_first_blue(left: int, right: int) -> int:
     return left  # 最终返回第一个蓝色元素的位置
 
 
+
 def find_last_red(left: int, right: int) -> int:
     """
     查找最后一个红色元素的索引。
-    
     二分查找过程中，不断收缩左边界直到找到最后一个红色元素。
-    
-    参数:
-        left (int): 查找范围的左边界。
-        right (int): 查找范围的右边界（不包括）。
-    
-    返回:
-        int: 最后一个满足红色条件的元素的索引。
     """
     while left < right:
         pivot = (left + right + 1) // 2

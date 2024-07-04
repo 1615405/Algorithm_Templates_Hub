@@ -1,15 +1,6 @@
 def boyer_moore(nums: List[int]) -> int:
     """
     使用摩尔投票法找出数组中的多数元素。
-    
-    参数:
-        nums (List[int]): 输入的整数数组。
-    
-    返回:
-        int: 数组中的多数元素。
-    
-    异常:
-        ValueError: 如果没有元素的出现次数超过数组长度的一半。
     """
     # 初始阶段：候选人为空，计数器为0
     candidate = None
