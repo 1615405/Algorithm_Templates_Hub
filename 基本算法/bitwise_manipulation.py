@@ -20,7 +20,7 @@ def hammingWeight(n: int) -> int:
 
 def isPowerOfTwo(n: int) -> bool:
     """
-    判断一个整数是否是2的幂。。
+    判断一个整数是否是2的幂。
     """
     if n <= 0:
         return False
