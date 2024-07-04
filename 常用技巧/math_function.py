@@ -59,3 +59,13 @@ def trailing_zeroes(n: int) -> int:
         zero_count += n // 5
         n //= 5
     return zero_count
+
+
+
+def gcd(a: int, b: int) -> int:
+    """
+    计算两个整数的最大公约数（Greatest Common Divisor）。
+    """
+    if a == 0:
+        return b
+    return gcd(b % a, a)

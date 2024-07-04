@@ -49,7 +49,7 @@ def isPowerOfFour(n: int) -> bool:
 
 
 
-def hasAlternatingBits(self, n: int) -> bool:
+def hasAlternatingBits(n: int) -> bool:
     """
     检查一个整数的二进制表示是否由交替的0和1组成。
     """
@@ -57,6 +57,21 @@ def hasAlternatingBits(self, n: int) -> bool:
 
     # 检查 xor_n 是否全为1
     return xor_n & (xor_n + 1) == 0
+
+
+
+def findComplement(num: int) -> int:
+    """
+    计算一个非负整数的补数。补数是将整数的所有位取反（0变1，1变0）得到的结果。
+
+    说明:
+    - 使用 bit_length() 方法确定数字的二进制表示中的位数。
+    - 创建一个相同长度的全1的掩码。例如，如果 num 的二进制表示为 '101'，则掩码为 '111'。
+    - 使用 XOR（异或）操作 num 和掩码，以得到补数。异或操作中，相同的位得0，不同的位得1。
+    """
+    highbit = num.bit_length()  # 获取 num 的二进制表示中的位数
+    mask = (1 << highbit) - 1   # 生成一个长度为 highbit 的全1的掩码
+    return num ^ mask           # 返回 num 的补数
 
 
 

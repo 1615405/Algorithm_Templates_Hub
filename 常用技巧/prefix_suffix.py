@@ -25,7 +25,7 @@ def findShortestSubArray(nums: List[int]) -> int:
 
 def shortest_distance_to_char(s: str, target_char: str) -> List[int]:
     """
-    计算字符串中每个字符到指定字符的最短距离。。
+    计算字符串中每个字符到指定字符的最短距离。
     """
     n = len(s)
     min_distances = [float('inf')] * n  # 初始化距离数组为无限大

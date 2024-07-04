@@ -44,3 +44,39 @@ def str_str(haystack: str, needle: str) -> int:
     
     # 如果遍历完成没有找到匹配，返回 -1
     return -1
+
+
+
+def longestCommonPrefix(strs: List[str]) -> str:
+    """
+    寻找字符串数组中的最长公共前缀。
+    """
+    lcp = 0  # 最长公共前缀的长度初始化为0
+    for col in zip(*strs):  # 使用 zip 来并行迭代每个字符串的相同位置的字符
+        if len(set(col)) > 1:  # 如果当前列的字符不全相同
+            break  # 结束循环
+        lcp += 1  # 如果当前列的字符全相同，公共前缀长度加1
+    
+    return strs[0][:lcp]  # 返回第一个字符串的前 lcp 个字符作为最长公共前缀
+
+
+
+def gcdOfStrings(str1: str, str2: str) -> str:
+    """
+    计算两个字符串的最大公共除数字符串。
+    """
+    # 判断两个字符串的拼接是否相等
+    if str1 + str2 != str2 + str1:
+        return ""
+    
+    # 求两个数的最大公因数
+    def gcd(a: int, b: int) -> int:
+        while b:
+            a, b = b, a % b
+        return a
+    
+    # 求两个字符串长度的最大公因数
+    gcd_length = gcd(len(str1), len(str2))
+    
+    # 截取任意一个字符串的前 gcd_length 个字符
+    return str1[:gcd_length]

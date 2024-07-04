@@ -20,6 +20,30 @@ def length_of_longest_substring(s: str) -> int:
 
 
 
+def minSubArrayLen(target: int, nums: List[int]) -> int:
+    """
+    寻找长度最小的连续子数组，使得子数组的和至少为 target。
+
+    说明:
+    - 使用双指针技术（滑动窗口）来解决问题。
+    - 窗口的右端点通过 for 循环向右移动，当窗口内元素的总和大于或等于 target 时，尝试收缩窗口的左端点以探索更短的有效子数组。
+    - 通过维护当前窗口的元素总和，并在每次迭代中更新这个和，以及可能的最小长度。
+    """
+    min_length = float('inf')  # 初始化最小长度为无穷大
+    current_sum = 0  # 当前窗口的元素总和
+    left = 0  # 初始化左指针
+
+    for right, num in enumerate(nums):  # 右指针遍历数组
+        current_sum += num  # 将当前元素加到总和中
+        while left <= right and current_sum >= target:  # 当总和大于等于目标时，尝试缩小窗口
+            min_length = min(min_length, right - left + 1)  # 更新最小长度
+            current_sum -= nums[left]  # 移除窗口左侧的元素
+            left += 1  # 左指针向右移动
+    
+    return min_length if min_length != float('inf') else 0  # 如果找到有效的子数组则返回最小长度，否则返回 0
+
+
+
 def maxArea(height: List[int]) -> int:
     """
     计算由线段垂直于x轴和两个点形成的容器可以容纳的最大水量。
