@@ -174,6 +174,43 @@ def longest_increasing_subsequence(nums):
 
 
 
+# ****************** 最长山峰子序列问题 ******************
+def longest_mountain_subsequence(heights):
+    """
+    计算给定数列中最长的山峰子序列的长度。山峰子序列是先递增后递减的子序列。
+
+    参数:
+    heights (list of int): 数列，可以是任何可比较元素的列表。
+
+    返回:
+    int: 最长山峰子序列的长度。
+    """
+    n = len(heights)
+
+    # 计算每个点作为山峰的最长递增子序列
+    up = [1] * n
+    for i in range(n):
+        for j in range(i):
+            if heights[i] > heights[j]:
+                up[i] = max(up[i], up[j] + 1)
+
+    # 计算每个点作为山峰的最长递减子序列
+    down = [1] * n
+    for i in range(n - 1, -1, -1):
+        for j in range(n - 1, i, -1):
+            if heights[i] > heights[j]:
+                down[i] = max(down[i], down[j] + 1)
+
+    # 计算最长山峰子序列的长度
+    max_length = 0
+    for i in range(n):
+        # if up[i] > 1 and down[i] > 1:  # 确保山峰两边都有元素
+        max_length = max(max_length, up[i] + down[i] - 1)
+
+    return max_length
+# ***********************************************
+
+
 # ****************** 最长公共子序列问题 ******************
 def longest_common_subsequence(a, b):
     """
