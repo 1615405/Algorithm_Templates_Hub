@@ -1,4 +1,4 @@
-# ****************** 0/1 背包问题 ******************
+# ****************** 0/1 背包问题 ****************************
 def zero_one_knapsack_naive(volumes, weights, capacity):
     """
     使用基本的动态规划解决0/1背包问题。
@@ -20,11 +20,11 @@ def zero_one_knapsack_naive(volumes, weights, capacity):
                 dp[i][j] = dp[i-1][j]
 
     return dp[n][capacity]
-# **************************************************
+# ***********************************************************
 
 
 
-# ****************** 0/1 背包问题 ******************
+# ****************** 0/1 背包问题 ****************************
 def zero_one_knapsack_optimized1(volumes, weights, capacity):
     """
     使用滚动数组优化空间复杂度的动态规划解决0/1背包问题。
@@ -45,11 +45,11 @@ def zero_one_knapsack_optimized1(volumes, weights, capacity):
                 dp[i & 1][j] = max(dp[i & 1][j], dp[(i-1) & 1][j - volumes[i-1]] + weights[i-1])
 
     return dp[n & 1][capacity]
-# **************************************************
+# ***********************************************************
 
 
 
-# ****************** 0/1 背包问题 ******************
+# ****************** 0/1 背包问题 ****************************
 def zero_one_knapsack_optimized2(volumes, weights, capacity):
     """
     使用一维数组进一步优化空间复杂度的动态规划解决0/1背包问题。
@@ -69,11 +69,11 @@ def zero_one_knapsack_optimized2(volumes, weights, capacity):
             dp[j] = max(dp[j], dp[j - volumes[i]] + weights[i])
 
     return max(dp)
-# **************************************************
+# ***********************************************************
 
 
 
-# ****************** 完全背包问题 ******************
+# ****************** 完全背包问题 ****************************
 def complete_knapsack_naive(volumes, values, capacity):
     """
     使用二维数组解决完全背包问题的动态规划方法。
@@ -99,11 +99,11 @@ def complete_knapsack_naive(volumes, values, capacity):
                 dp[i][j] = max(dp[i][j], dp[i][j - volumes[i - 1]] + values[i - 1])
 
     return dp[n][capacity]  # 返回dp数组中的最大值，即为背包的最大价值
-# **************************************************
+# ************************************************************
 
 
 
-# ****************** 完全背包问题 ******************
+# ****************** 完全背包问题 *****************************
 def complete_knapsack_optimized(volumes, values, capacity):
     """
     使用一维数组进一步优化空间复杂度的动态规划解决完全背包问题。
@@ -127,11 +127,11 @@ def complete_knapsack_optimized(volumes, values, capacity):
             dp[j] = max(dp[j], dp[j - volumes[i]] + values[i])
 
     return dp[capacity]  # 返回dp数组中的最大值，即为背包的最大价值
-# **************************************************
+# ***********************************************************
 
 
 
-# ****************** 多重背包问题 ******************
+# ****************** 多重背包问题 ****************************
 def multiple_knapsack_naive(volumes, values, counts, capacity):
     """
     使用二维数组解决多重背包问题的基础动态规划方法。
@@ -154,11 +154,11 @@ def multiple_knapsack_naive(volumes, values, counts, capacity):
                 dp[i][j] = max(dp[i][j], dp[i-1][j - k * volumes[i-1]] + k * values[i-1])
 
     return dp[n][capacity]
-# **************************************************
+# ***********************************************************
 
 
 
-# ****************** 多重背包问题 ******************
+# ****************** 多重背包问题 *****************************
 def multiple_knapsack_optimized1(volumes, values, counts, capacity):
     """
     使用一维数组优化的动态规划解决多重背包问题。
@@ -179,11 +179,11 @@ def multiple_knapsack_optimized1(volumes, values, counts, capacity):
                 dp[k] = max(dp[k], dp[k - volumes[i]] + values[i])
 
     return max(dp)
-# **************************************************
+# ***********************************************************
 
 
 
-# ****************** 多重背包问题 ******************
+# ****************** 多重背包问题 ****************************
 def multiple_knapsack_optimized2(volumes, values, counts, capacity):
     """
     使用二进制方法优化的多重背包问题解法。
@@ -214,11 +214,11 @@ def multiple_knapsack_optimized2(volumes, values, counts, capacity):
             dp[j] = max(dp[j], dp[j - volume] + value)
 
     return dp[capacity]
-# **************************************************
+# ************************************************************
 
 
 
-# ****************** 多重背包问题 ******************
+# ****************** 多重背包问题 *****************************
 def multiple_knapsack_optimized3(volumes, values, counts, capacity):
     """
     使用单调队列优化的多重背包问题解法。
@@ -253,4 +253,28 @@ def multiple_knapsack_optimized3(volumes, values, counts, capacity):
                 dp[k * volumes[i] + mod] = queue[0][1] + k * values[i]
 
     return dp[capacity]
-# **************************************************
+# *************************************************************
+
+
+
+# ****************** 分组背包问题 ******************************
+def group_knapsack(max_capacity, groups_items):
+    """
+    计算在给定的最大容量下，通过选择每组中的一个物品可以获得的最大价值。
+    
+    参数:
+        max_capacity: 整数，表示背包的最大容量
+        groups_items: 二维列表，每个子列表表示一组物品，子列表中的每个元素为元组 (volume, value)
+        
+    返回:
+        整数，表示在最大容量下可以获得的最大价值
+    """
+    dp = [0] * (max_capacity + 1)
+    for items in groups_items:
+        for current_capacity in range(max_capacity, -1, -1):
+            for volume, value in items:
+                if volume <= current_capacity:
+                    dp[current_capacity] = max(dp[current_capacity], dp[current_capacity - volume] + value)
+
+    return dp[max_capacity]
+# **************************************************************
