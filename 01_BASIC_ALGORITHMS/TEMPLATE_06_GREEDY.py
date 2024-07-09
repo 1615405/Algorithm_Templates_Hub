@@ -20,7 +20,7 @@ def merge_intervals(intervals: List[List[int]]) -> List[List[int]]:
 
 
 # ****************** 最大不重叠区间及区间选点问题 ******************
-def max_non_overlapping_intervals_and_point_selection(intervals):
+def max_non_overlapping_intervals(intervals):
     """
     给定一系列闭区间，此函数计算最大不重叠区间数量，
     并可用于确定覆盖所有给定区间的最少点数。
@@ -204,12 +204,6 @@ def minimize_stack_risk(items):
         items: 元组列表，每个元组表示一个物品，形式为(weight, strength)
     返回:
         所有物品按最优顺序堆叠后可能出现的最大风险的最小值
-
-    解释:
-        - 每个物品的总承载能力（重量 + 强度）决定了其在堆叠中的顺序。
-        - 按此顺序堆叠物品可以保证任何时候累积的重量都尽可能少地超过下方物品的承载能力。
-        - 累积重量超过物品强度时，会计算超载量，这是风险的量化。
-        - 目标是找到一个堆叠顺序，使这些超载量中的最大值最小。
     """
     # 计算每个物品的总承载能力（重量 + 强度）并排序
     items = [(weight + strength, weight) for weight, strength in items]
