@@ -28,3 +28,24 @@ def mergeTwoLists(list1: Optional[ListNode], list2: Optional[ListNode]) -> Optio
     
     cur.next = list1 if list1 else list2
     return dummy.next
+
+
+def deleteDuplicates(head: Optional[ListNode]) -> Optional[ListNode]:
+    """
+    删除排序链表中的所有重复元素，使每个元素只出现一次，并返回修改后的链表的头节点。
+
+    参数：
+        head (Optional[ListNode]): 排序链表的头节点。
+    
+    返回：
+        Optional[ListNode]: 删除重复元素后的链表的头节点。
+    """
+    if not head:
+        return None
+    cur = head
+    while cur.next:
+        if cur.next.val == cur.val:
+            cur.next = cur.next.next
+        else:
+            cur = cur.next
+    return head
