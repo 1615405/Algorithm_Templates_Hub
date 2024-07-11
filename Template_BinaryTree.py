@@ -1,0 +1,51 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+
+def inorderTraversal(root: Optional[TreeNode]) -> List[int]:
+    """
+    对二叉树进行中序遍历并返回遍历结果的列表。中序遍历首先访问左子树，然后访问根节点，最后访问右子树。
+
+    参数：
+        root (Optional[TreeNode]): 二叉树的根节点。
+    
+    返回：
+        List[int]: 中序遍历的节点值构成的列表。
+    """
+    if not root: return []
+    res, stack = [], []
+    while root:
+        if root.left: # 存在左子树，入栈并深入左子树
+            stack.append(root)
+            root = root.left
+        else: # 否则就可以寻找深入右子树的节点
+            while stack and not root.right: # 对于不能深入右子树的节点，直接访问，此时子树访问结束
+                res.append(root.val)
+                root = stack.pop()
+            res.append(root.val) # 如果可以深入右子树，访问该节点后，深入右子树
+            root = root.right
+    return res
+
+
+def isSameTree(p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
+    """
+    判断两棵二叉树是否相同。如果两棵树在结构上相同，并且节点具有相同的值，则认为它们是相同的。
+
+    参数：
+        p (Optional[TreeNode]): 第一棵树的根节点。
+        q (Optional[TreeNode]): 第二棵树的根节点。
+    
+    返回：
+        bool: 如果两棵树相同，则返回 True，否则返回 False。
+    """
+    if not p or not q:
+        return p is q
+
+    if p.val != q.val:
+        return False
+        
+    return isSameTree(p.left, q.left) and isSameTree(p.right, q.right)
