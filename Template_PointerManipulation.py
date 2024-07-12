@@ -77,3 +77,27 @@ def isHappy(n: int) -> bool:
         slow = get_next(slow)
         fast = get_next(get_next(fast))
     return slow == 1
+
+
+def summaryRanges(nums: List[int]) -> List[str]:
+    """
+    汇总数组中连续的整数范围，并以字符串形式返回。例如，数组 [0,1,2,4,5,7] 将被汇总为 ["0->2","4->5","7"]。
+
+    参数:
+        nums (List[int]): 一个整数数组。
+
+    返回:
+        List[str]: 表示连续整数范围的字符串列表。
+    """
+    ans = []
+    n, i = len(nums), 0
+    while i < n:
+        start = i
+        while i < n - 1 and nums[i] + 1 == nums[i + 1]:
+            i += 1
+        s = str(nums[start])
+        if start < i:
+            s += "->" + str(nums[i])
+        ans.append(s)
+        i += 1
+    return ans
