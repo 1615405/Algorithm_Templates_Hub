@@ -6,6 +6,28 @@
 #         self.right = right
 
 
+def preorderTraversal(root: Optional[TreeNode]) -> List[int]:
+    """
+    对二叉树进行先序遍历（根-左-右）并返回遍历的结果。
+    
+    参数：
+        root (Optional[TreeNode]): 二叉树的根节点。
+    
+    返回：
+        List[int]: 存储先序遍历结果的列表。
+    """
+    if not root: return []
+    res, stack = [], [root] # 利用栈进行临时存储
+    while stack:
+        node = stack.pop() # 取出一个节点，表示开始访问以该节点为根的子树
+        res.append(node.val) # 首先访问该节点（先序），之后顺序入栈右子树，左子树
+        if node.right:
+            stack.append(node.right)
+        if node.left:
+            stack.append(node.left)
+    return res
+
+
 def inorderTraversal(root: Optional[TreeNode]) -> List[int]:
     """
     对二叉树进行中序遍历并返回遍历结果的列表。中序遍历首先访问左子树，然后访问根节点，最后访问右子树。
@@ -28,6 +50,33 @@ def inorderTraversal(root: Optional[TreeNode]) -> List[int]:
                 root = stack.pop()
             res.append(root.val) # 如果可以深入右子树，访问该节点后，深入右子树
             root = root.right
+    return res
+
+
+def postorderTraversal(root: Optional[TreeNode]) -> List[int]:
+    """
+    对二叉树进行后序遍历（左-右-根）并返回遍历的结果。
+    
+    参数：
+        root (Optional[TreeNode]): 二叉树的根节点。
+    
+    返回：
+        List[int]: 存储后序遍历结果的列表。
+    """
+    if not root: return []
+    res, stack = [], [root]
+    prev = root # 为了判断父子节点关系
+    while stack:
+        root = stack.pop() # 取出一个节点，表示开始访问以该节点为根的子树
+        if (not root.left and not root.right) or (root.left == prev or root.right == prev): # 如果该节点为叶子节点，或者已经访问该节点的子节点
+            res.append(root.val) # 直接访问
+            prev = root
+        else: # 否则就顺序把当前节点，右孩子，左孩子入栈
+            stack.append(root)
+            if root.right:
+                stack.append(root.right)
+            if root.left:
+                stack.append(root.left)
     return res
 
 
