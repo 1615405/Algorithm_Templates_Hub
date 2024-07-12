@@ -221,3 +221,41 @@ def hasPathSum(root: Optional[TreeNode], targetSum: int) -> bool:
         return targetSum == root.val
     
     return hasPathSum(root.left, targetSum - root.val) or hasPathSum(root.right, targetSum - root.val)
+
+
+def countNodes(root: Optional[TreeNode]) -> int:
+    """
+    计算完全二叉树中的节点数。利用二分查找结合位操作，以优化性能，避免直接的完全遍历。
+
+    参数：
+        root (Optional[TreeNode]): 完全二叉树的根节点。
+
+    返回：
+        int: 树中的节点总数。
+    """
+    def exists(root: Optional[TreeNode], level: int, k: int) -> bool:
+        bits = 1 << (level - 1)
+        while root and bits > 0:
+            if (bits & k) == 0:
+                root = root.left
+            else:
+                root = root.right
+            bits >>= 1
+        return root is not None
+    
+    if not root:  return 0
+
+    level = 0
+    node = root
+    while node.left:
+        level += 1
+        node = node.left
+    
+    low, high = 1 << level, (1 << (level + 1)) - 1
+    while low < high:
+        mid = (low + high + 1) // 2
+        if exists(root, level, mid):
+            low = mid
+        else:
+            high = mid - 1
+    return low
