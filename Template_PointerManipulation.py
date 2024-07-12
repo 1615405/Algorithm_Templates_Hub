@@ -52,3 +52,28 @@ def merge(nums1: List[int], m: int, nums2: List[int], n: int) -> None:
             nums1[tail] = nums2[p2]
             p2 -= 1
         tail -= 1  # 更新尾部指针
+
+
+def isHappy(n: int) -> bool:
+    """
+    判断一个整数 n 是否是快乐数。快乐数的定义：在重复替换数字以其数字的平方和的过程中，如果 n 最终等于 1，则 n 是快乐数。
+
+    参数:
+        n (int): 需要判断的整数。
+
+    返回:
+        bool: 如果 n 是快乐数，则返回 True，否则返回 False。
+    """
+    def get_next(x: int) -> int:
+        total_sum = 0
+        while x:
+            x, v = divmod(x, 10)
+            total_sum += v * v
+        return total_sum
+    
+    slow = n
+    fast = get_next(n)
+    while slow != fast:
+        slow = get_next(slow)
+        fast = get_next(get_next(fast))
+    return slow == 1
