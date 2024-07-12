@@ -101,3 +101,30 @@ def summaryRanges(nums: List[int]) -> List[str]:
         ans.append(s)
         i += 1
     return ans
+
+
+def reverseVowels(s: str) -> str:
+    """
+    反转字符串中的所有元音字母。
+    
+    参数:
+        s (str): 输入的字符串。
+        
+    返回:
+        str: 元音字母被反转后的字符串。
+    """
+    def isVowel(ch: str) -> bool:
+        return ch in "aeiouAEIOU"
+    
+    left, right = 0, len(s) - 1
+    slist = list(s)
+    while left < right:
+        while left < right and not isVowel(s[left]):
+            left += 1
+        while left < right and not isVowel(s[right]):
+            right -= 1
+        if left < right:
+            slist[left], slist[right] = slist[right], slist[left]
+        left += 1
+        right -= 1
+    return ''.join(slist)
