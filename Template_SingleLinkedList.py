@@ -69,3 +69,22 @@ def hasCycle(head: Optional[ListNode]) -> bool:
         if fast is slow:
             return True
     return False
+
+
+def getIntersectionNode(headA: ListNode, headB: ListNode) -> Optional[ListNode]:
+    """
+    寻找两个单链表相交的起始节点。如果两个链表没有交点，返回 None。
+    使用两个指针分别遍历两个链表，当达到链表末尾时，转向另一个链表的头部继续遍历，直到两个指针相遇。
+    
+    参数：
+        headA (ListNode): 第一个链表的头节点。
+        headB (ListNode): 第二个链表的头节点。
+    
+    返回：
+        Optional[ListNode]: 两个链表相交的节点，如果不相交，则返回 None。
+    """
+    A, B = headA, headB
+    while A != B:
+        A = A.next if A else headB
+        B = B.next if B else headA
+    return A
