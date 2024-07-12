@@ -37,3 +37,18 @@ def hammingWeight(n: int) -> int:
         n = n & (n - 1)
         ret += 1
     return ret
+
+
+def isPowerOfTwo(n: int) -> bool:
+    """
+    判断给定的整数 n 是否是 2 的幂次方。2 的幂次方在二进制表示中有且仅有一个 1，通过 n 和 n-1 的位与操作来确定。
+
+    参数:
+        n (int): 需要判断的整数。
+
+    返回:
+        bool: 如果 n 是 2 的幂次方则返回 True，否则返回 False。
+    """
+    if n <= 0:
+        return False
+    return (n & (n -1)) == 0
