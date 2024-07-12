@@ -109,3 +109,43 @@ def removeElements(head: Optional[ListNode], val: int) -> Optional[ListNode]:
         else:
             cur = cur.next
     return dummy.next
+
+
+def isPalindrome(head: Optional[ListNode]) -> bool:
+    """
+    判断给定的链表是否为回文链表。使用快慢指针找到链表中点，然后翻转后半部分，之后比较前半部分和翻转后的后半部分是否相同。
+
+    参数:
+        head (Optional[ListNode]): 链表的头节点。
+
+    返回:
+        bool: 如果链表是回文结构则返回 True，否则返回 False。
+    """
+    def middleList(head: Optional[ListNode]) -> Optional[ListNode]:
+        fast = slow = head
+        while fast and fast.next:
+            fast = fast.next.next
+            slow = slow.next
+        return slow
+        
+    def reverseList(head: Optional[ListNode]) -> Optional[ListNode]:
+        previous = None
+        current = head
+        while current:
+            cur_next = current.next
+            current.next = previous
+            previous = current
+            current = cur_next
+        
+        return previous
+        
+    first = head
+    second = reverseList(middleList(head))
+
+    while second:
+        if second.val != first.val:
+            return False
+        second = second.next
+        first = first.next
+    
+    return True
