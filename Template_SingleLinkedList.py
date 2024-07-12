@@ -49,3 +49,23 @@ def deleteDuplicates(head: Optional[ListNode]) -> Optional[ListNode]:
         else:
             cur = cur.next
     return head
+
+
+def hasCycle(head: Optional[ListNode]) -> bool:
+    """
+    判断链表中是否有环。使用快慢指针方法，快指针每次移动两步，慢指针每次移动一步，如果链表有环，则快慢指针最终会相遇。
+
+    参数：
+        head (Optional[ListNode]): 链表的头节点。
+    
+    返回：
+        bool: 如果链表中有环，则返回True；否则返回False。
+    """
+    slow = head
+    fast = head
+    while fast and fast.next:
+        fast = fast.next.next
+        slow = slow.next
+        if fast is slow:
+            return True
+    return False
