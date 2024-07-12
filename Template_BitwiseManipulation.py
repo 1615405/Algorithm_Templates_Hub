@@ -52,3 +52,23 @@ def isPowerOfTwo(n: int) -> bool:
     if n <= 0:
         return False
     return (n & (n -1)) == 0
+
+
+def isPowerOfFour(n: int) -> bool:
+    """
+    判断给定的整数 n 是否是 4 的幂次方。
+
+    参数:
+        n (int): 需要判断的整数。
+
+    返回:
+        bool: 如果 n 是 4 的幂次方则返回 True，否则返回 False。
+    """
+    NOT_FOUR_POWER_MASK = 0xAAAAAAAA
+    if n <= 0:  
+        return False
+
+    if n & (n - 1) != 0:  
+        return False
+
+    return (n & NOT_FOUR_POWER_MASK) == 0
