@@ -88,3 +88,24 @@ def getIntersectionNode(headA: ListNode, headB: ListNode) -> Optional[ListNode]:
         A = A.next if A else headB
         B = B.next if B else headA
     return A
+
+
+def removeElements(head: Optional[ListNode], val: int) -> Optional[ListNode]:
+    """
+    从链表中删除所有值等于指定值 val 的节点。
+    使用虚拟头节点简化边界条件处理，确保即使头节点需要被删除时也能正确处理。
+
+    参数：
+        head (Optional[ListNode]): 链表的头节点。
+        val (int): 需要删除的节点值。
+    
+    返回：
+        Optional[ListNode]: 删除指定值节点后的链表头节点。
+    """
+    dummy = cur = ListNode(next=head)
+    while cur.next:
+        if cur.next.val == val:
+            cur.next = cur.next.next
+        else:
+            cur = cur.next
+    return dummy.next
