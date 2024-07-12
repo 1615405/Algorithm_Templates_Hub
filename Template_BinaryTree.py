@@ -80,6 +80,31 @@ def postorderTraversal(root: Optional[TreeNode]) -> List[int]:
     return res
 
 
+def binaryTreePaths(root: Optional[TreeNode]) -> List[str]:
+    """
+    生成从根节点到每个叶子节点的所有路径的字符串表示。
+    
+    参数:
+        root (Optional[TreeNode]): 二叉树的根节点。
+
+    返回:
+        List[str]: 包含每个从根到叶路径的字符串列表，每个路径的格式如 "1->2->3"。
+    """
+    def construct_paths(root, path):
+        if not root:  return None
+        path += str(root.val)
+        if not root.left and not root.right:  # 当前节点是叶子节点
+            paths.append(path)  # 把路径加入到答案中
+        else:
+            path += '->'  # 当前节点不是叶子节点，继续递归遍历
+            construct_paths(root.left, path)
+            construct_paths(root.right, path)
+
+    paths = []
+    construct_paths(root, '')
+    return paths
+
+
 def isSameTree(p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
     """
     判断两棵二叉树是否相同。如果两棵树在结构上相同，并且节点具有相同的值，则认为它们是相同的。
