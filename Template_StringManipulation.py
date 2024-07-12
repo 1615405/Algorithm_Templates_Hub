@@ -49,3 +49,23 @@ def strStr(haystack: str, needle: str) -> int:
             return i
     
     return -1
+
+
+def isIsomorphic(s: str, t: str) -> bool:
+    """
+    判断两个字符串 s 和 t 是否是同构的。同构字符串的定义是：字符串 s 可以通过替换字符的方式转换为字符串 t。
+    要求每个字符的替换是一致的，且一个字符只能替换为一个字符（不允许多对一或一对多的映射）。
+
+    参数：
+        s (str): 第一个字符串。
+        t (str): 第二个字符串。
+    
+    返回：
+        bool: 如果 s 和 t 是同构的，则返回 True，否则返回 False。
+    """
+    s2t, t2s = {}, {}
+    for a, b in zip(s, t):
+        if s2t.get(a, b) != b or t2s.get(b, a) != a:
+            return False
+        s2t[a], t2s[b] = b, a
+    return True
