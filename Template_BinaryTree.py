@@ -118,6 +118,21 @@ def isSymmetric(root: Optional[TreeNode]) -> bool:
     return isSameTree(root, root)
 
 
+def invertTree(root: Optional[TreeNode]) -> Optional[TreeNode]:
+    """
+    翻转一棵二叉树。每个节点的左右子树会被交换。
+
+    参数:
+        root (Optional[TreeNode]): 二叉树的根节点。
+
+    返回:
+        Optional[TreeNode]: 翻转后的二叉树的根节点。
+    """
+    if not root:  return None
+    root.left, root.right = invertTree(root.right), invertTree(root.left)
+    return root
+
+
 def maxDepth(root: Optional[TreeNode]) -> int:
     """
     计算二叉树的最大深度。最大深度是从根节点到最远叶子节点的最长路径上的节点数。
