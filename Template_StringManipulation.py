@@ -69,3 +69,22 @@ def isIsomorphic(s: str, t: str) -> bool:
             return False
         s2t[a], t2s[b] = b, a
     return True
+
+
+def isAnagram(s: str, t: str) -> bool:
+    """
+    判断两个字符串是否互为异位词。异位词指的是两个字符串拥有相同的字符和相同的字符频次，但字符顺序可以不同。
+
+    参数:
+        s (str): 第一个字符串。
+        t (str): 第二个字符串。
+
+    返回:
+        bool: 如果两个字符串是变位词则返回 True，否则返回 False。
+    """
+    cnt = [0] * 26
+    for c in s:
+        cnt[ord(c) - ord('a')] += 1
+    for c in t:
+        cnt[ord(c) - ord('a')] -= 1
+    return all(c == 0 for c in cnt)
