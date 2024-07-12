@@ -14,3 +14,17 @@ def maxProfit(prices: List[int]) -> int:
         ans = max(ans, p - min_price)
         min_price = min(min_price, p)
     return ans
+
+
+class NumArray:
+    """
+    利用前缀和数组优化区间和查询的类。
+    """
+    def __init__(self, nums: List[int]):
+        s = [0] * (len(nums) + 1)
+        for i, x in enumerate(nums):
+            s[i + 1] = s[i] + x
+        self.s = s
+
+    def sumRange(self, left: int, right: int) -> int:
+        return self.s[right+1] - self.s[left]
