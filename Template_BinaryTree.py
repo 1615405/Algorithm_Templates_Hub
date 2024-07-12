@@ -49,3 +49,60 @@ def isSameTree(p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
         return False
         
     return isSameTree(p.left, q.left) and isSameTree(p.right, q.right)
+
+
+def isSymmetric(root: Optional[TreeNode]) -> bool:
+    """
+    检查给定的二叉树是否是对称的。
+
+    参数：
+        root (Optional[TreeNode]): 二叉树的根节点。
+    
+    返回：
+        bool: 如果树是对称的，则返回 True，否则返回 False。
+    """
+    def isSameTree(p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
+        if p is None or q is None:
+            return p is q
+        return p.val == q.val and isSameTree(p.left, q.right) and isSameTree(p.right, q.left)
+    
+    return isSameTree(root, root)
+
+
+def maxDepth(root: Optional[TreeNode]) -> int:
+    """
+    计算二叉树的最大深度。最大深度是从根节点到最远叶子节点的最长路径上的节点数。
+    
+    参数：
+        root (Optional[TreeNode]): 二叉树的根节点。
+    
+    返回：
+        int: 二叉树的最大深度。
+    """
+    if root is None: return 0
+    l_depth = maxDepth(root.left)
+    r_depth = maxDepth(root.right)
+    return max(l_depth, r_depth) + 1  # 返回最大深度加一（根节点）
+
+
+def sortedArrayToBST(nums: List[int]) -> Optional[TreeNode]:
+    """
+    将一个按升序排列的整数数组转换为一棵高度平衡的二叉搜索树。高度平衡的二叉树是指每个节点的两个子树的深度差不超过1。
+    
+    参数：
+        nums (List[int]): 升序排列的整数数组。
+    
+    返回：
+        Optional[TreeNode]: 高度平衡二叉搜索树的根节点。
+    """
+    def helper(left: int, right: int) -> Optional[TreeNode]:
+        if left > right:
+            return None
+        
+        mid = (left + right) // 2
+        root = TreeNode(nums[mid])
+        root.left = helper(left, mid - 1)
+        root.right = helper(mid + 1, right)
+        return root
+    
+    return helper(0, len(nums) - 1)
