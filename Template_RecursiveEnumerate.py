@@ -14,3 +14,41 @@ def readBinaryWatch(turnedOn: int) -> List[str]:
         if h < 12 and m < 60 and bin(i).count("1") == turnedOn:  # 验证时间的有效性和点亮灯的数量
             ans.append(f"{h}:{m:02d}")  # 格式化输出并添加到结果列表
     return ans
+
+
+def islandPerimeter(grid: List[List[int]]) -> int:
+    """
+    计算在给定的二维网格中，由1组成的岛屿的周长。
+    
+    参数:
+    grid (List[List[int]]): 二维网格，其中1表示陆地，0表示水。每个单元格是正方形，边长为1。
+    
+    返回:
+    int: 岛屿的周长。
+    
+    描述:
+    通过深度优先搜索（DFS）遍历网格中的每个陆地单元格，并计算其对周长的贡献。每个陆地单元格会检查其四个方向（上、下、左、右），每朝一个方向走到边界或水域时，周长加1。
+    如果该方向的单元格已访问过或为水，这部分边界也算入周长。为防止重复访问，访问过的陆地单元格将其值标记为2。
+    """
+    m, n = len(grid), len(grid[0])
+    dx = [1, 0, -1, 0]
+    dy = [0, 1, 0, -1]
+    ans = 0
+    
+    def dfs(x: int, y: int) -> int:
+        if x < 0 or x >= m or y < 0 or y >= n or grid[x][y] == 0:
+            return 1
+        if grid[x][y] == 2:
+            return 0
+        grid[x][y] = 2
+        ans = 0
+        for k in range(4):
+            tx, ty = x + dx[k], y + dy[k]
+            ans += dfs(tx, ty)
+        return ans
+    
+    result = 0
+    for i in range(m):
+        for j in range(n):
+            result += dfs(i, j) if grid[i][j] == 1 else 0
+    return result
