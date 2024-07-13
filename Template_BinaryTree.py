@@ -306,10 +306,10 @@ def sumOfLeftLeaves(root: Optional[TreeNode]) -> int:
     计算给定二叉树中所有左叶子节点的值之和。
 
     参数:
-    root (Optional[TreeNode]): 二叉树的根节点。
+        root (Optional[TreeNode]): 二叉树的根节点。
 
     返回:
-    int: 所有左叶子节点的值之和。
+        int: 所有左叶子节点的值之和。
 
     描述:
     函数通过递归深度优先搜索（DFS）遍历树。对于每个节点，检查其左子节点是否为叶子节点。如果是左叶子节点，则累加其值；如果不是，递归计算其左子节点。
@@ -331,10 +331,10 @@ def findMode(root: Optional[TreeNode]) -> List[int]:
     查找二叉搜索树中的众数(出现频率最高的元素)。
 
     参数:
-    root (TreeNode, 可选): 二叉搜索树的根节点。
+        root (TreeNode, 可选): 二叉搜索树的根节点。
 
     返回:
-    List[int]: 包含所有众数的列表。
+        List[int]: 包含所有众数的列表。
     """
     result = []
     maxFreq = 0
@@ -357,4 +357,29 @@ def findMode(root: Optional[TreeNode]) -> List[int]:
             maxFreq = freq
         dfs(node.right)
     dfs(root)
+    return result
+
+
+def getMinimumDifference(root: Optional[TreeNode]) -> int:
+    """
+    计算给定二叉搜索树中任意两个节点值的最小差异。
+
+    参数:
+        root (TreeNode, 可选): 二叉搜索树的根节点。
+
+    返回:
+        int: 最小差异的数值。
+    """
+    stack = []
+    result = float('inf')
+    previous = None
+    while root or stack:
+        if root:
+            stack.append(root)
+            root = root.left
+        else:
+            current = stack.pop()
+            if previous:  result = min(current.val - previous.val, result)
+            previous = current
+            root = current.right
     return result
