@@ -87,3 +87,40 @@ def findDisappearedNumbers(nums: List[int]) -> List[int]:
         x = (num - 1) % n
         nums[x] += n
     return [i + 1 for i, num in enumerate(nums) if num <= n]
+
+
+def repeatedSubstringPattern(s: str) -> bool:
+    """
+    检查给定字符串是否可以由它的一个子字符串重复多次构成。
+    
+    参数:
+    s (str): 输入的字符串。
+    
+    返回:
+    bool: 如果字符串可以由它的一个子字符串重复构成，则返回 True，否则返回 False。
+    
+    描述:
+    使用 Knuth-Morris-Pratt (KMP) 算法的部分匹配表（也称为失配表）来寻找可能的重复模式。
+    首先通过构建失配表来判断字符串的周期性。然后检查字符串的长度是否能被周期长度整除，
+    来确定整个字符串是否由重复的子字符串构成。此外，还有一个快速检查，通过将字符串加倍
+    并移除首尾字符后，看原字符串是否存在于新字符串中，这是基于字符串周期性的一个快速验证方法。
+    """
+    def build_kmp_fail(pattern: str) -> list:
+        m = len(pattern)
+        fail = [-1] * m
+        for i in range(1, m):
+            j = fail[i - 1]
+            while j != -1 and pattern[j + 1] != pattern[i]:
+                j = fail[j]
+            if pattern[j + 1] == pattern[i]:
+                fail[i] = j + 1
+        return fail
+        
+    def check(s: str) -> bool:
+        doubled_s = (s + s)[1:-1]
+        return s in doubled_s
+    
+    n = len(s)
+    fail = build_kmp_fail(s)
+    lps = (fail)[-1] + 1
+    return lps > 0 and n % (n - lps) == 0
