@@ -74,3 +74,29 @@ class MyQueue:
 
     def empty(self) -> bool:
         return not self.A and not self.B
+
+
+def nextGreaterElement(nums1: List[int], nums2: List[int]) -> List[int]:
+    """
+    在数组 nums2 中寻找数组 nums1 的每个元素的下一个更大元素。
+
+    参数:
+        nums1 (List[int]): 第一个列表，包含需要查找下一个更大元素的目标元素。
+        nums2 (List[int]): 第二个列表，其中包含 nums1 的所有元素，并且可能包含更多元素。
+
+    返回:
+        List[int]: 一个列表，表示 nums1 中每个元素在 nums2 中的下一个更大元素的值。
+
+    描述:
+    使用单调栈和哈希表的组合来优化搜索过程。首先反向遍历 nums2，使用栈来存储未来可能的更大元素。
+    对于 nums2 中的每个元素，如果它比栈顶元素小或栈为空，则直接将其加入栈中；
+    如果它比栈顶元素大，则弹出栈顶元素，直到找到一个更大的元素或栈为空。使用哈希表记录每个元素的下一个更大元素。
+    """
+    res = defaultdict(int)
+    stack = []
+    for num in reversed(nums2):
+        while stack and stack[-1] <= num:
+            stack.pop()
+        res[num] = stack[-1] if stack else -1
+        stack.append(num)
+    return [res[num] for num in nums1]
