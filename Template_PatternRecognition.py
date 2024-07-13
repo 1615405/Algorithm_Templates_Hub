@@ -51,3 +51,22 @@ def majorityElement(nums):
         return candidate
     else:
         raise ValueError("No majority element found")
+
+
+def thirdMax(nums: List[int]) -> int:
+     """
+    找出数组中第三大的数。如果不存在第三大的数，则返回最大数。
+
+    参数:
+    nums (List[int]): 输入的整数数组。
+
+    返回:
+    int: 数组中第三大的数，或者如果不足三个不同的数，则返回最大数。
+    """
+    from sortedcontainers import SortedList
+    s = SortedList()
+    for num in nums:
+        if num not in s:
+            s.add(num)
+            if len(s) > 3:  s.pop(0)
+    return s[0] if len(s) == 3 else s[-1]
