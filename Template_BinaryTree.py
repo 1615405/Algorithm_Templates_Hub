@@ -5,6 +5,12 @@
 #         self.left = left
 #         self.right = right
 
+# Definition for a Node.
+# class Node:
+#     def __init__(self, val=None, children=None):
+#         self.val = val
+#         self.children = children
+
 
 def preorderTraversal(root: Optional[TreeNode]) -> List[int]:
     """
@@ -404,5 +410,105 @@ def diameterOfBinaryTree(root: Optional[TreeNode]) -> int:
         nonlocal ans
         ans = max(ans, l_len + r_len)
         return max(l_len, r_len)
+    dfs(root)
+    return ans
+
+
+def findTilt(root: Optional[TreeNode]) -> int:
+    """
+    计算二叉树的所有节点的倾斜度总和。节点的倾斜度定义为该节点的左子树节点值之和与右子树节点值之和的绝对差。
+    
+    参数:
+        root (TreeNode, 可选): 二叉树的根节点。
+    
+    返回:
+        int: 所有节点的倾斜度之和。
+    """
+    ans = 0
+    def dfs(root: Optional[TreeNode]) -> int:
+        if not root:  return 0
+        sum_left = dfs(root.left)
+        sum_right = dfs(root.right)
+        nonlocal ans
+        ans += abs(sum_left - sum_right)
+        return sum_left + sum_right + root.val
+    dfs(root)
+    return ans
+
+
+def isSubtree(root: Optional[TreeNode], subRoot: Optional[TreeNode]) -> bool:
+    """
+    判断一个二叉树是否是另一个二叉树的子树。
+    
+    参数:
+        root (TreeNode, 可选): 主树的根节点。
+        subRoot (TreeNode, 可选): 子树的根节点。
+
+    返回:
+        bool: 如果 subRoot 是 root 的子树，返回 True，否则返回 False。
+    """
+    def isSameTree(p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
+        if not p or not q:  return p is q
+        if p.val != q.val:  return False
+        return isSameTree(p.left, q.left) and isSameTree(p.right, q.right)
+    
+    if not root or not subRoot:
+        return root is subRoot
+    return isSameTree(root, subRoot) or isSubtree(root.left, subRoot) or isSubtree(root.right, subRoot)
+
+
+def maxDepth(root: 'Node') -> int:
+    """
+    计算 N 叉树的最大深度。
+    
+    参数:
+        root (Node, 可选): N 叉树的根节点。
+
+    返回:
+        int: 树的最大深度。
+    """
+    if not root:  return 0
+    ans = 0
+    for child in root.children:
+        ans = max(ans, maxDepth(child))
+    return ans + 1
+
+
+def preorder(root: 'Node') -> List[int]:
+    """
+    对一个 N 叉树进行前序遍历，返回遍历的节点值列表。
+    
+    参数:
+        root (Node, 可选): N 叉树的根节点。
+    
+    返回:
+        List[int]: 前序遍历的节点值列表。
+    """
+    ans = []
+    def dfs(node: 'Node'):
+        if not root:  return
+        ans.append(node.val)
+        for child in node.children:
+            dfs(child)
+    dfs(root)
+    return ans
+
+
+def postorder(root: 'Node') -> List[int]:
+    """
+    对一个 N 叉树进行后序遍历，返回遍历的节点值列表。
+    
+    参数:
+        root (Node, 可选): N 叉树的根节点。
+    
+    返回:
+        List[int]: 后序遍历的节点值列表。
+    """
+    ans = []
+    def dfs(node: 'Node'):
+        if node is None:  return
+        for child in node.children:
+            dfs(child)
+        ans.append(node.val)
     dfs(root)
     return ans
