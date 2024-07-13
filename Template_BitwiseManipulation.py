@@ -72,3 +72,18 @@ def isPowerOfFour(n: int) -> bool:
         return False
 
     return (n & NOT_FOUR_POWER_MASK) == 0
+
+
+def findComplement(num: int) -> int:
+     """
+    计算给定整数的二进制补码。二进制补码是将二进制数中的每一位取反（1变0，0变1）后的结果。
+
+    参数:
+        num (int): 需要求补码的正整数。
+
+    返回:
+        int: 输入整数的二进制补码。
+    """
+    highbit = num.bit_length()
+    mask = (1 << (highbit)) - 1
+    return num ^ mask
