@@ -138,3 +138,26 @@ def checkPerfectNumber(num: int) -> bool:
     """
     perfect_numbers = [6, 28, 496, 8128, 33550336, 8589869056, 137438691328, 2305843008139952128]
     return num in perfect_numbers
+
+
+def matrixReshape(mat: List[List[int]], r: int, c: int) -> List[List[int]]:
+    """
+    将给定的矩阵重新塑形成新的维度。
+    
+    参数:
+        mat (List[List[int]]): 原始的二维整数数组。
+        r (int): 新矩阵的行数。
+        c (int): 新矩阵的列数。
+    
+    返回:
+        List[List[int]]: 如果可以重新塑形，则返回新的矩阵；如果不可行，则返回原始矩阵。
+    """
+    m, n = len(mat), len(mat[0])
+
+    if m * n != r * c:
+        return mat
+
+    ans = [[0] * c for _ in range(r)]
+    for x in range(m * n):
+        ans[x // c][x % c] = mat[x // n][x % n]
+    return ans
