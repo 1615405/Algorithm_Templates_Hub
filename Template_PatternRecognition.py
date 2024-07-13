@@ -54,7 +54,7 @@ def majorityElement(nums):
 
 
 def thirdMax(nums: List[int]) -> int:
-     """
+    """
     找出数组中第三大的数。如果不存在第三大的数，则返回最大数。
 
     参数:
@@ -124,3 +124,17 @@ def repeatedSubstringPattern(s: str) -> bool:
     fail = build_kmp_fail(s)
     lps = (fail)[-1] + 1
     return lps > 0 and n % (n - lps) == 0
+
+
+def checkPerfectNumber(num: int) -> bool:
+    """
+    检查给定的数字是否是完美数。完美数是指真正因子（除了自身以外的约数）之和等于它本身的正整数。
+    
+    参数:
+        num (int): 需要检查的数字。
+    
+    返回:
+        bool: 如果 num 是完美数，则返回 True，否则返回 False。
+    """
+    perfect_numbers = [6, 28, 496, 8128, 33550336, 8589869056, 137438691328, 2305843008139952128]
+    return num in perfect_numbers
