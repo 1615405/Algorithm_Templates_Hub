@@ -70,3 +70,20 @@ def thirdMax(nums: List[int]) -> int:
             s.add(num)
             if len(s) > 3:  s.pop(0)
     return s[0] if len(s) == 3 else s[-1]
+
+
+def findDisappearedNumbers(nums: List[int]) -> List[int]:
+    """
+    在一个给定的从1到n的数组中，找出所有未出现在数组中的数字。
+    
+    参数:
+    nums (List[int]): 一个范围从 1 到 n 的整数数组，但数组中的一些元素可能丢失或重复。
+    
+    返回:
+    List[int]: 数组中没有出现的数字列表。
+    """
+    n = len(nums)
+    for num in nums:
+        x = (num - 1) % n
+        nums[x] += n
+    return [i + 1 for i, num in enumerate(nums) if num <= n]
