@@ -324,3 +324,37 @@ def sumOfLeftLeaves(root: Optional[TreeNode]) -> int:
             ans += dfs(node.right)
         return ans
     return dfs(root) if root else 0
+
+
+def findMode(root: Optional[TreeNode]) -> List[int]:
+    """
+    查找二叉搜索树中的众数(出现频率最高的元素)。
+
+    参数:
+    root (TreeNode, 可选): 二叉搜索树的根节点。
+
+    返回:
+    List[int]: 包含所有众数的列表。
+    """
+    result = []
+    maxFreq = 0
+    cur = None
+    freq = 0
+
+    def dfs(node):
+        nonlocal cur, maxFreq, result, freq
+        if not node: return
+        dfs(node.left)
+        if cur == node.val:
+            freq += 1
+        else:
+            freq = 1
+            cur = node.val
+        if freq == maxFreq:
+            result.append(cur)
+        elif freq > maxFreq:
+            result = [cur]
+            maxFreq = freq
+        dfs(node.right)
+    dfs(root)
+    return result
