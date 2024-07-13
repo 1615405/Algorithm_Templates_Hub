@@ -383,3 +383,26 @@ def getMinimumDifference(root: Optional[TreeNode]) -> int:
             previous = current
             root = current.right
     return result
+
+
+def diameterOfBinaryTree(root: Optional[TreeNode]) -> int:
+    """
+    计算二叉树的直径，即二叉树中任意两个节点之间的最长路径的边数。
+    
+    参数:
+        root (TreeNode, 可选): 二叉树的根节点。
+
+    返回:
+        int: 二叉树的直径。
+    """
+    ans = 0
+    def dfs(node: Optional[TreeNode]) -> int:
+        if node is None:
+            return -1
+        l_len = dfs(node.left) + 1
+        r_len = dfs(node.right) + 1
+        nonlocal ans
+        ans = max(ans, l_len + r_len)
+        return max(l_len, r_len)
+    dfs(root)
+    return ans
