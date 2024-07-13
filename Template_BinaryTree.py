@@ -299,3 +299,28 @@ def countNodes(root: Optional[TreeNode]) -> int:
         else:
             high = mid - 1
     return low
+
+
+def sumOfLeftLeaves(root: Optional[TreeNode]) -> int:
+    """
+    计算给定二叉树中所有左叶子节点的值之和。
+
+    参数:
+    root (Optional[TreeNode]): 二叉树的根节点。
+
+    返回:
+    int: 所有左叶子节点的值之和。
+
+    描述:
+    函数通过递归深度优先搜索（DFS）遍历树。对于每个节点，检查其左子节点是否为叶子节点。如果是左叶子节点，则累加其值；如果不是，递归计算其左子节点。
+    对于右子节点，仅当它不是叶子节点时，才递归计算其右子节点的左叶子节点之和。
+    """
+    isLeafNode = lambda node: not node.left and not node.right
+    def dfs(node: Optional[TreeNode]) -> int:
+        ans = 0
+        if node.left:
+            ans += node.left.val if isLeafNode(node.left) else dfs(node.left)
+        if node.right and not isLeafNode(node.right):
+            ans += dfs(node.right)
+        return ans
+    return dfs(root) if root else 0
