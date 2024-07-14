@@ -88,3 +88,37 @@ def isAnagram(s: str, t: str) -> bool:
     for c in t:
         cnt[ord(c) - ord('a')] -= 1
     return all(c == 0 for c in cnt)
+
+
+def validPalindrome(s: str) -> bool:
+    """
+    判断给定的字符串是否可以通过最多删除一个字符成为回文字符串。
+
+    参数:
+        s (str): 需要检查的字符串。
+
+    返回:
+        bool: 如果字符串是回文或者可以通过删除一个字符成为回文，则返回 True，否则返回 False。
+
+    方法:
+        双指针技术用于从字符串的两端向中心移动。如果遇到不匹配的字符，
+        使用辅助函数 checkPalindrome 来检查去除左边或右边一个字符后，剩余的字符串是否为回文。
+    """
+    def checkPalindrome(low: int, high: int) -> bool:
+        while low < high:
+            if s[low] == s[high]:
+                low += 1
+                high -= 1
+            else:
+                return False
+        return True
+
+    n = len(s)
+    left, right = 0, n - 1
+    while left < right:
+        if s[left] == s[right]:
+            left += 1
+            right -= 1
+        else:
+            return checkPalindrome(left + 1, right) or checkPalindrome(left, right - 1)
+    return True
