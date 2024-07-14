@@ -89,7 +89,7 @@ def findComplement(num: int) -> int:
     return num ^ mask
 
 
-def hasAlternatingBits(self, n: int) -> bool:
+def hasAlternatingBits(n: int) -> bool:
     """
     检查整数的二进制表示是否由交替的 0 和 1 位组成。
 
