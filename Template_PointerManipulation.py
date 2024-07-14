@@ -128,3 +128,25 @@ def reverseVowels(s: str) -> str:
         left += 1
         right -= 1
     return ''.join(slist)
+
+
+def findMaxAverage(nums: List[int], k: int) -> float:
+    """
+    计算数组中长度为 k 的连续子数组的最大平均值。
+
+    参数:
+        nums (List[int]): 一个整数数组。
+        k (int): 子数组的固定长度。
+
+    返回:
+        float: 最大平均值。
+
+    方法:
+        使用滑动窗口算法，维护一个长度为 k 的窗口，计算并更新该窗口的总和，
+        以此找到最大的窗口总和，并返回其平均值。
+    """
+    maxTotal = total = sum(nums[:k])
+    for i in range(k, len(nums)):
+        total = total - nums[i - k] + nums[i]
+        maxTotal = max(maxTotal, total)
+    return maxTotal / k
