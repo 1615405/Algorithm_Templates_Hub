@@ -87,3 +87,17 @@ def findComplement(num: int) -> int:
     highbit = num.bit_length()
     mask = (1 << (highbit)) - 1
     return num ^ mask
+
+
+def hasAlternatingBits(self, n: int) -> bool:
+    """
+    检查整数的二进制表示是否由交替的 0 和 1 位组成。
+
+    参数:
+        n (int): 需要检查的整数。
+
+    返回:
+        bool: 如果整数的二进制位交替为 0 和 1，则返回 True，否则返回 False。
+    """
+    xor_n = n ^ (n >> 1)
+    return xor_n & (xor_n + 1) == 0
