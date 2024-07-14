@@ -282,3 +282,114 @@ def isSubtree(root: Optional[TreeNode], subRoot: Optional[TreeNode]) -> bool:
     if not root or not subRoot:
         return root is subRoot
     return isSameTree(root, subRoot) or isSubtree(root.left, subRoot) or isSubtree(root.right, subRoot)
+
+
+def mergeTrees(root1: Optional[TreeNode], root2: Optional[TreeNode]) -> Optional[TreeNode]:
+    """
+    合并两棵二叉树，每个对应节点的值相加，如果一个位置只有一个树有节点，则直接使用该节点。
+
+    参数:
+        root1 (TreeNode, 可选): 第一棵二叉树的根节点。
+        root2 (TreeNode, 可选): 第二棵二叉树的根节点。
+
+    返回:
+        TreeNode, 可选: 合并后的二叉树的根节点，如果两棵树均为空，则返回 None。
+    """
+    if not root1:  return root2
+    if not root2:  return root1
+    return TreeNode(root1.val + root2.val,
+        mergeTrees(root1.left, root2.left),
+        mergeTrees(root1.right, root2.right))
+
+
+def averageOfLevels(root: Optional[TreeNode]) -> List[float]:
+    """
+    计算二叉树每一层的平均值。
+
+    参数:
+        root (TreeNode, 可选): 二叉树的根节点。
+
+    返回:
+        List[float]: 包含每一层节点平均值的列表。如果树为空，返回空列表。
+    """
+    averages = list()
+    queue = collections.deque([root])
+    while queue:
+        total = 0
+        size = len(queue)
+        for _ in range(size):
+            node = queue.popleft()
+            total += node.val
+            left, right = node.left, node.right
+            if left:
+                queue.append(left)
+            if right:
+                queue.append(right)
+        averages.append(total / size)
+    return averages
+
+
+def findTarget(root: Optional[TreeNode], k: int) -> bool:
+    """
+    判断二叉树中是否存在两个节点，使得这两个节点的值之和等于给定的数 k。
+
+    参数:
+        root (TreeNode, 可选): 二叉树的根节点。
+        k (int): 需要查找的目标和。
+
+    返回:
+        bool: 如果存在两个节点的值之和等于 k，则返回 True；否则返回 False。
+    """
+    seen = set()
+    def helper(node, k):
+        nonlocal seen
+        if node is None:
+            return False
+        if k - node.val in seen:
+            return True
+        seen.add(node.val)
+        return helper(node.left, k) or helper(node.right, k)
+    return helper(root, k)
+
+
+def findSecondMinimumValue(root: Optional[TreeNode]) -> int:
+    """
+    在给定的二叉树中找到第二小的元素值。假设树中至少有两个不同的元素值，否则返回 -1。树中每个节点的值是其所有子节点的最小值。
+
+    参数:
+        root (TreeNode, 可选): 二叉树的根节点。
+
+    返回:
+        int: 树中第二小的元素值。如果所有节点值相同，返回 -1。
+    """
+    ans, rootvalue = -1, root.val
+    def dfs(node: TreeNode) -> None:
+        nonlocal ans
+        if not node:
+            return
+        if ans != -1 and node.val >= ans:
+            return
+        if node.val > rootvalue:
+            ans = node.val
+        dfs(node.left)
+        dfs(node.right)
+    dfs(root)
+    return ans
+
+
+def searchBST(root: Optional[TreeNode], val: int) -> Optional[TreeNode]:
+    """
+    在二叉搜索树中搜索给定值的节点。如果存在这样的节点，则返回该节点；否则返回 None。
+
+    参数:
+        root (TreeNode, 可选): 二叉搜索树的根节点。
+        val (int): 需要搜索的节点值。
+
+    返回:
+        TreeNode, 可选: 包含给定值的节点，如果没有找到则返回 None。
+    """
+    if not root:
+        return None
+    if root.val == val:
+        return root
+    return self.searchBST(root.left if val < root.val else root.right, val)
