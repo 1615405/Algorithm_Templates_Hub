@@ -9,12 +9,6 @@
 def preorderTraversal(root: Optional[TreeNode]) -> List[int]:
     """
     对二叉树进行先序遍历（根-左-右）并返回遍历的结果。
-    
-    参数：
-        root (Optional[TreeNode]): 二叉树的根节点。
-    
-    返回：
-        List[int]: 存储先序遍历结果的列表。
     """
     if not root: return []
     res, stack = [], [root]
