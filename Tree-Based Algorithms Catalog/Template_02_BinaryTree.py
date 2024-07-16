@@ -38,7 +38,6 @@ def invertTree(root: Optional[TreeNode]) -> Optional[TreeNode]:
     """
     if not root:
         return None
-    
     root.left, root.right = invertTree(root.right), invertTree(root.left)
     return root
 
@@ -60,10 +59,8 @@ def isBalanced(root: Optional[TreeNode]) -> bool:
     
     if not root:
         return True
-
     if abs(height(root.left) - height(root.right)) > 1:
         return False
-        
     return isBalanced(root.left) and isBalanced(root.right)
 
 
@@ -99,11 +96,8 @@ def mergeTrees(root1: Optional[TreeNode], root2: Optional[TreeNode]) -> Optional
     返回:
         TreeNode, 可选: 合并后的二叉树的根节点，如果两棵树均为空，则返回 None。
     """
-    if not root1:
-        return root2
-    
-    if not root2:
-        return root1
+    if not root1:  return root2
+    if not root2:  return root1
     
     return TreeNode(root1.val + root2.val,
         mergeTrees(root1.left, root2.left),
