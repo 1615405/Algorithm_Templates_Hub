@@ -48,6 +48,24 @@ def isBalanced(root: Optional[TreeNode]) -> bool:
     return isBalanced(root.left) and isBalanced(root.right)
 
 
+def searchBST(root: Optional[TreeNode], val: int) -> Optional[TreeNode]:
+    """
+    在二叉搜索树中搜索给定值的节点。如果存在这样的节点，则返回该节点；否则返回 None。
+
+    参数:
+        root (TreeNode, 可选): 二叉搜索树的根节点。
+        val (int): 需要搜索的节点值。
+
+    返回:
+        TreeNode, 可选: 包含给定值的节点，如果没有找到则返回 None。
+    """
+    if not root:
+        return None
+    if root.val == val:
+        return root
+    return searchBST(root.left if val < root.val else root.right, val)
+
+
 def minDepth(root: Optional[TreeNode]) -> int:
     """
     计算二叉树的最小深度。最小深度是从根节点到最近叶子节点的最短路径上的节点数。
@@ -83,10 +101,10 @@ def binaryTreePaths(root: Optional[TreeNode]) -> List[str]:
     def construct_paths(root, path):
         if not root:  return None
         path += str(root.val)
-        if not root.left and not root.right:  # 当前节点是叶子节点
-            paths.append(path)  # 把路径加入到答案中
+        if not root.left and not root.right:
+            paths.append(path)
         else:
-            path += '->'  # 当前节点不是叶子节点，继续递归遍历
+            path += '->'
             construct_paths(root.left, path)
             construct_paths(root.right, path)
 
@@ -106,8 +124,7 @@ def hasPathSum(root: Optional[TreeNode], targetSum: int) -> bool:
     返回：
         bool: 如果存在这样的路径，则返回 True；否则返回 False。
     """
-    if not root:
-        return False
+    if not root:  return False
 
     if root.left is root.right:
         return targetSum == root.val
@@ -184,24 +201,6 @@ def findSecondMinimumValue(root: Optional[TreeNode]) -> int:
         dfs(node.right)
     dfs(root)
     return ans
-
-
-def searchBST(root: Optional[TreeNode], val: int) -> Optional[TreeNode]:
-    """
-    在二叉搜索树中搜索给定值的节点。如果存在这样的节点，则返回该节点；否则返回 None。
-
-    参数:
-        root (TreeNode, 可选): 二叉搜索树的根节点。
-        val (int): 需要搜索的节点值。
-
-    返回:
-        TreeNode, 可选: 包含给定值的节点，如果没有找到则返回 None。
-    """
-    if not root:
-        return None
-    if root.val == val:
-        return root
-    return searchBST(root.left if val < root.val else root.right, val)
 
 
 def averageOfLevels(root: Optional[TreeNode]) -> List[float]:
