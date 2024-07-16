@@ -10,67 +10,52 @@ def preorderTraversal(root: Optional[TreeNode]) -> List[int]:
     """
     对二叉树进行先序遍历（根-左-右）并返回遍历的结果。
     """
-    if not root: return []
-    res, stack = [], [root]
+    if not root:  return []
+    result, stack = [], [root]
     while stack:
-        node = stack.pop()
-        res.append(node.val)
-        if node.right:
-            stack.append(node.right)
-        if node.left:
-            stack.append(node.left)
-    return res
+        current = stack.pop()
+        result.append(current.val)
+        if current.right:
+            stack.append(current.right)
+        if current.left:
+            stack.append(current.left)
+    return result
 
 
 def inorderTraversal(root: Optional[TreeNode]) -> List[int]:
     """
-    对二叉树进行中序遍历并返回遍历结果的列表。中序遍历首先访问左子树，然后访问根节点，最后访问右子树。
-
-    参数：
-        root (Optional[TreeNode]): 二叉树的根节点。
-    
-    返回：
-        List[int]: 中序遍历的节点值构成的列表。
+    中序遍历首先访问左子树，然后访问根节点，最后访问右子树。
     """
-    if not root: return []
-    res, stack = [], []
-    while root:
-        if root.left:
-            stack.append(root)
-            root = root.left
-        else:
-            while stack and not root.right:
-                res.append(root.val)
-                root = stack.pop()
-            res.append(root.val)
-            root = root.right
-    return res
+    current, result, stack = root, [], []
+    while current or stack:
+        while current:
+            stack.append(current)
+            current = current.left
+        current = stack.pop()
+        result.append(current.val)
+        current = current.right
+    return result
 
 
 def postorderTraversal(root: Optional[TreeNode]) -> List[int]:
     """
     对二叉树进行后序遍历（左-右-根）并返回遍历的结果。
-    
-    参数：
-        root (Optional[TreeNode]): 二叉树的根节点。
-    
-    返回：
-        List[int]: 存储后序遍历结果的列表。
     """
-    if not root: return []
-    res, stack = [], [root]
-    prev = root
-    while stack:
+    if not root:  return []
+    prev, result, stack = None, [], []
+    while root or stack:
+        while root:
+            stack.append(root)
+            root = root.left
         root = stack.pop()
-        if (not root.left and not root.right) or (root.left == prev or root.right == prev):
+        if not root.right or root.right == prev:
+            result.append(root.val)
             prev = root
+            root = None
         else:
             stack.append(root)
-            if root.right:
-                stack.append(root.right)
-            if root.left:
-                stack.append(root.left)
-    return res
+            root = root.right
+    return result
 
 
 def averageOfLevels(root: Optional[TreeNode]) -> List[float]:
