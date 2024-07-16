@@ -104,3 +104,25 @@ def floodFill(image: List[List[int]], sr: int, sc: int, color: int) -> List[List
                 image[mx][my] = color
                 que.append((mx, my))
     return image
+
+
+def minCostClimbingStairs(self, cost: List[int]) -> int:
+    """
+    计算爬楼梯的最小成本。可以从索引0或1开始，每次可以爬1或2个台阶。
+    
+    参数:
+        cost (List[int]): 每一阶台阶的登上成本。
+    
+    返回:
+        int: 爬完所有台阶后的最小成本。
+    
+    描述:
+    使用深度优先搜索（DFS）结合记忆化（缓存）来寻找达到楼梯顶部的最小成本。基本思路是，到达最顶层可以从最后一阶或倒数第二阶完成。
+    因此，我们可以使用递归来解决这个问题，并且使用 @cache 装饰器来存储之前计算的结果，避免重复计算。
+    """
+    @cache
+    def dfs(i: int) -> int:
+        if i <= 1:
+            return 0
+        return min(dfs(i - 2) + cost[i - 2], dfs(i - 1) + cost[i - 1])
+    return dfs(len(cost))
