@@ -11,14 +11,14 @@ def preorderTraversal(root: Optional[TreeNode]) -> List[int]:
     对二叉树进行先序遍历（根-左-右）并返回遍历的结果。
     """
     if not root:  return []
-    result, stack = [], [root]
-    while stack:
-        current = stack.pop()
-        result.append(current.val)
-        if current.right:
-            stack.append(current.right)
-        if current.left:
-            stack.append(current.left)
+    result, stack = [], []
+    while stack or root:
+        while root:
+            result.append(root.val)
+            stack.append(root)
+            root = root.left
+        root = stack.pop()
+        root = root.right
     return result
 
 
