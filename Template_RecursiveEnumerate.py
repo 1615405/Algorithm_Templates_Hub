@@ -3,10 +3,10 @@ def readBinaryWatch(turnedOn: int) -> List[str]:
     计算所有可能的时间，其中二进制表示中有指定数量的 1s 的灯被点亮。
     
     参数:
-    turnedOn (int): 点亮的灯的数量，这些灯在二进制表达的小时和分钟上。
+        turnedOn (int): 点亮的灯的数量，这些灯在二进制表达的小时和分钟上。
     
     返回:
-    List[str]: 表示所有可能时间的字符串列表，格式为 "小时:分钟"，分钟保留两位数。
+        List[str]: 表示所有可能时间的字符串列表，格式为 "小时:分钟"，分钟保留两位数。
     """
     ans = list()
     for i in range(1024):  # 1024 = 2^10，因为总共有 10 个灯（4 个小时灯，6 个分钟灯）
@@ -21,14 +21,14 @@ def islandPerimeter(grid: List[List[int]]) -> int:
     计算在给定的二维网格中，由1组成的岛屿的周长。
     
     参数:
-    grid (List[List[int]]): 二维网格，其中1表示陆地，0表示水。每个单元格是正方形，边长为1。
+        grid (List[List[int]]): 二维网格，其中1表示陆地，0表示水。每个单元格是正方形，边长为1。
     
     返回:
-    int: 岛屿的周长。
+        int: 岛屿的周长。
     
     描述:
-    通过深度优先搜索（DFS）遍历网格中的每个陆地单元格，并计算其对周长的贡献。每个陆地单元格会检查其四个方向（上、下、左、右），每朝一个方向走到边界或水域时，周长加1。
-    如果该方向的单元格已访问过或为水，这部分边界也算入周长。为防止重复访问，访问过的陆地单元格将其值标记为2。
+    通过深度优先搜索（DFS）遍历网格中的每个陆地单元格，并计算其对周长的贡献。每个陆地单元格会检查其四个方向（上、下、左、右），每朝一个方向走到边界或水域时，
+    周长加1。如果该方向的单元格已访问过或为水，这部分边界也算入周长。为防止重复访问，访问过的陆地单元格将其值标记为2。
     """
     m, n = len(grid), len(grid[0])
     dx = [1, 0, -1, 0]
@@ -52,3 +52,27 @@ def islandPerimeter(grid: List[List[int]]) -> int:
         for j in range(n):
             result += dfs(i, j) if grid[i][j] == 1 else 0
     return result
+
+
+def isOneBitCharacter(bits: List[int]) -> bool:
+    """
+    判断由 1-bit 和 2-bit 组成的数组中最后一个字符是否为一个 1-bit 字符。
+
+    参数:
+        bits (List[int]): 一个整数数组，其中每个整数只能是 0 或 1。数组中的数字代表一个数据流，其中 0 代表一个 1-bit 的字符，10 或 11 代表一个 2-bit 的字符。
+
+    返回:
+        bool: 如果数组的最后一个字符是一个 1-bit 字符，则返回 True；否则返回 False。
+    """
+    n = len(bits)
+    @cache
+    def can_decode(start: int) -> bool:
+        if start == n - 1:
+            return bits[start] == 0
+        if start >= n:
+            return False
+        if bits[start] == 0:
+            return can_decode(start + 1)
+        if start + 1 < n and bits[start] == 1:
+            return can_decode(start + 2)
+    return can_decode(0)
