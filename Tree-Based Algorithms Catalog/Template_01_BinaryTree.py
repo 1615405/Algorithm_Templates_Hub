@@ -80,21 +80,10 @@ def levelOrder(root: Optional[TreeNode]) -> List[List[int]]:
 def isSameTree(p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
     """
     判断两棵二叉树是否相同。如果两棵树在结构上相同，并且节点具有相同的值，则认为它们是相同的。
-
-    参数：
-        p (Optional[TreeNode]): 第一棵树的根节点。
-        q (Optional[TreeNode]): 第二棵树的根节点。
-    
-    返回：
-        bool: 如果两棵树相同，则返回 True，否则返回 False。
     """
-    if not p or not q:
+    if p is None or q is None:
         return p is q
-
-    if p.val != q.val:
-        return False
-        
-    return isSameTree(p.left, q.left) and isSameTree(p.right, q.right)
+    return p.val == q.val and isSameTree(p.left, q.left) and isSameTree(p.right, q.right)
 
 
 def isBalanced(root: Optional[TreeNode]) -> bool:
