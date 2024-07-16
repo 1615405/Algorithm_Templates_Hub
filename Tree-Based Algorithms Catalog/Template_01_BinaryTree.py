@@ -77,3 +77,30 @@ def postorderTraversal(root: Optional[TreeNode]) -> List[int]:
             if root.left:
                 stack.append(root.left)
     return res
+
+
+def averageOfLevels(root: Optional[TreeNode]) -> List[float]:
+    """
+    计算二叉树每一层的平均值。
+
+    参数:
+        root (TreeNode, 可选): 二叉树的根节点。
+
+    返回:
+        List[float]: 包含每一层节点平均值的列表。如果树为空，返回空列表。
+    """
+    averages = list()
+    queue = collections.deque([root])
+    while queue:
+        total = 0
+        size = len(queue)
+        for _ in range(size):
+            node = queue.popleft()
+            total += node.val
+            left, right = node.left, node.right
+            if left:
+                queue.append(left)
+            if right:
+                queue.append(right)
+        averages.append(total / size)
+    return averages
