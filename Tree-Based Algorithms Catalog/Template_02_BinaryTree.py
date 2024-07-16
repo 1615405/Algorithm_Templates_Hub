@@ -37,14 +37,15 @@ def isBalanced(root: Optional[TreeNode]) -> bool:
         bool: 如果二叉树是高度平衡的，则返回True；否则返回False。
     """
     def height(root: Optional[TreeNode]) -> int:
-        if not root:
-            return 0
+        if not root:  return 0
         return max(height(root.left), height(root.right)) + 1
     
     if not root:
         return True
+    
     if abs(height(root.left) - height(root.right)) > 1:
         return False
+        
     return isBalanced(root.left) and isBalanced(root.right)
 
 
@@ -61,8 +62,10 @@ def searchBST(root: Optional[TreeNode], val: int) -> Optional[TreeNode]:
     """
     if not root:
         return None
+        
     if root.val == val:
         return root
+        
     return searchBST(root.left if val < root.val else root.right, val)
 
 
@@ -78,13 +81,13 @@ def minDepth(root: Optional[TreeNode]) -> int:
     """
     if root is None:
         return 0
-    
+        
     if root.right is None:
         return minDepth(root.left) + 1
-    
+        
     if root.left is None:
         return minDepth(root.right) + 1
-    
+        
     return min(minDepth(root.left), minDepth(root.right)) + 1
 
 
@@ -99,12 +102,15 @@ def hasPathSum(root: Optional[TreeNode], targetSum: int) -> bool:
     返回：
         bool: 如果存在这样的路径，则返回 True；否则返回 False。
     """
-    if not root:  return False
-
-    if root.left is root.right:
-        return targetSum == root.val
-    
-    return hasPathSum(root.left, targetSum - root.val) or hasPathSum(root.right, targetSum - root.val)
+    def hasPathSum(self, root: Optional[TreeNode], targetSum: int) -> bool:
+        isLeafNode = lambda node: not node.left and not node.right
+        
+        if not root:  return False
+            
+        if isLeafNode(root):
+            return targetSum == root.val
+            
+        return hasPathSum(root.left, targetSum - root.val) or hasPathSum(root.right, targetSum - root.val)
 
 
 def sortedArrayToBST(nums: List[int]) -> Optional[TreeNode]:
@@ -128,78 +134,3 @@ def sortedArrayToBST(nums: List[int]) -> Optional[TreeNode]:
         return root
     
     return helper(0, len(nums) - 1)
-
-
-def findTarget(root: Optional[TreeNode], k: int) -> bool:
-    """
-    判断二叉树中是否存在两个节点，使得这两个节点的值之和等于给定的数 k。
-
-    参数:
-        root (TreeNode, 可选): 二叉树的根节点。
-        k (int): 需要查找的目标和。
-
-    返回:
-        bool: 如果存在两个节点的值之和等于 k，则返回 True；否则返回 False。
-    """
-    seen = set()
-    def helper(node, k):
-        nonlocal seen
-        if node is None:
-            return False
-        if k - node.val in seen:
-            return True
-        seen.add(node.val)
-        return helper(node.left, k) or helper(node.right, k)
-    return helper(root, k)
-
-
-def findSecondMinimumValue(root: Optional[TreeNode]) -> int:
-    """
-    在给定的二叉树中找到第二小的元素值。假设树中至少有两个不同的元素值，否则返回 -1。树中每个节点的值是其所有子节点的最小值。
-
-    参数:
-        root (TreeNode, 可选): 二叉树的根节点。
-
-    返回:
-        int: 树中第二小的元素值。如果所有节点值相同，返回 -1。
-    """
-    ans, rootvalue = -1, root.val
-    def dfs(node: TreeNode) -> None:
-        nonlocal ans
-        if not node:
-            return
-        if ans != -1 and node.val >= ans:
-            return
-        if node.val > rootvalue:
-            ans = node.val
-        dfs(node.left)
-        dfs(node.right)
-    dfs(root)
-    return ans
-
-
-def averageOfLevels(root: Optional[TreeNode]) -> List[float]:
-    """
-    计算二叉树每一层的平均值。
-
-    参数:
-        root (TreeNode, 可选): 二叉树的根节点。
-
-    返回:
-        List[float]: 包含每一层节点平均值的列表。如果树为空，返回空列表。
-    """
-    averages = list()
-    queue = collections.deque([root])
-    while queue:
-        total = 0
-        size = len(queue)
-        for _ in range(size):
-            node = queue.popleft()
-            total += node.val
-            left, right = node.left, node.right
-            if left:
-                queue.append(left)
-            if right:
-                queue.append(right)
-        averages.append(total / size)
-    return averages
