@@ -76,3 +76,31 @@ def isOneBitCharacter(bits: List[int]) -> bool:
         if start + 1 < n and bits[start] == 1:
             return can_decode(start + 2)
     return can_decode(0)
+
+
+def floodFill(image: List[List[int]], sr: int, sc: int, color: int) -> List[List[int]]:
+    """
+    对图像执行“泛洪填充”操作。
+    
+    参数:
+        image (List[List[int]]): 二维整数数组，代表图像的像素值。
+        sr (int): 起始像素的行号。
+        sc (int): 起始像素的列号。
+        color (int): 要填充的颜色值。
+    
+    返回:
+        List[List[int]]: 修改后的图像。
+    """
+    currColor = image[sr][sc]
+    if currColor == color:
+        return image
+    n, m = len(image), len(image[0])
+    que = collections.deque([(sr, sc)])
+    image[sr][sc] = color
+    while que:
+        x, y = que.popleft()
+        for mx, my in [(x - 1, y), (x + 1, y), (x, y + 1), (x, y - 1)]:
+            if 0 <= mx < n and 0 <= my < m and image[mx][my] == currColor:
+                image[mx][my] = color
+                que.append((mx, my))
+    return image
