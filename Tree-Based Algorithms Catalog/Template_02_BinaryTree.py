@@ -88,31 +88,6 @@ def minDepth(root: Optional[TreeNode]) -> int:
     return min(minDepth(root.left), minDepth(root.right)) + 1
 
 
-def binaryTreePaths(root: Optional[TreeNode]) -> List[str]:
-    """
-    生成从根节点到每个叶子节点的所有路径的字符串表示。
-    
-    参数:
-        root (Optional[TreeNode]): 二叉树的根节点。
-
-    返回:
-        List[str]: 包含每个从根到叶路径的字符串列表，每个路径的格式如 "1->2->3"。
-    """
-    def construct_paths(root, path):
-        if not root:  return None
-        path += str(root.val)
-        if not root.left and not root.right:
-            paths.append(path)
-        else:
-            path += '->'
-            construct_paths(root.left, path)
-            construct_paths(root.right, path)
-
-    paths = []
-    construct_paths(root, '')
-    return paths
-
-
 def hasPathSum(root: Optional[TreeNode], targetSum: int) -> bool:
     """
     判断二叉树中是否存在一条路径，该路径上的节点值之和等于给定的目标值 targetSum。
