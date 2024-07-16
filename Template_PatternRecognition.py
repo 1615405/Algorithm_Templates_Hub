@@ -161,3 +161,91 @@ def matrixReshape(mat: List[List[int]], r: int, c: int) -> List[List[int]]:
     for x in range(m * n):
         ans[x // c][x % c] = mat[x // n][x % n]
     return ans
+
+
+class KthLargest:
+     """
+    初始化一个包含最小堆的对象。堆中保存了所有给定数组中的最大的 k 个数。
+    这样堆的顶部就是这 k 个数中的最小数，即第 k 个最大的数。
+
+    参数:
+        k (int): 表示需要找到第 k 大的元素。
+        nums (List[int]): 一个整数列表。
+    """
+    def __init__(self, k: int, nums: List[int]):
+        self.heap = []
+        self.k = k
+        for num in nums:
+            heapq.heappush(self.heap, num)
+            if len(self.heap) > k:
+                heapq.heappop(self.heap)
+
+    def add(self, val: int) -> int:
+        heapq.heappush(self.heap, val)
+        if len(self.heap) > self.k:
+            heapq.heappop(self.heap)
+        return self.heap[0]
+
+
+class MyHashSet:
+    """
+    初始化一个哈希集合对象。
+    使用一个大质数997作为桶的数量，以减少潜在的哈希冲突。
+    初始化桶列表，每个桶为一个空列表，用于存储哈希冲突的元素。
+    """
+    def __init__(self):
+        self.bucket_size = 997
+        self.buckets = [[] for _ in range(self.bucket_size)]
+
+    def _hash(self, key: int) -> int:
+        return key % self.bucket_size
+
+    def add(self, key: int) -> None:
+        bucket_index = self._hash(key)
+        if key not in self.buckets[bucket_index]:
+            self.buckets[bucket_index].append(key)
+
+    def remove(self, key: int) -> None:
+        bucket_index = self._hash(key)
+        if key in self.buckets[bucket_index]:
+            self.buckets[bucket_index].remove(key)
+
+    def contains(self, key: int) -> bool:
+        bucket_index = self._hash(key)
+        return key in self.buckets[bucket_index]
+
+
+class MyHashMap:
+    """
+    初始化哈希映射对象。
+    使用一个大质数997作为桶的数量，以减少潜在的哈希冲突。
+    初始化桶列表，每个桶为一个空列表，用于存储键值对。
+    """
+    def __init__(self):
+        self.bucket_size = 997
+        self.buckets = [[] for _ in range(self.bucket_size)]
+
+    def _hash(self, key: int) -> int:
+        return key % self.bucket_size
+
+    def put(self, key: int, value: int) -> None:
+        bucket_index = self._hash(key)
+        for i, (k, v) in enumerate(self.buckets[bucket_index]):
+            if k == key:
+                self.buckets[bucket_index][i] = (key, value)
+                return
+        self.buckets[bucket_index].append((key, value))
+
+    def get(self, key: int) -> int:
+        bucket_index = self._hash(key)
+        for k, v in self.buckets[bucket_index]:
+            if k == key:
+                return v
+        return -1
+
+    def remove(self, key: int) -> None:
+        bucket_index = self._hash(key)
+        for i, (k, v) in enumerate(self.buckets[bucket_index]):
+            if k == key:
+                del self.buckets[bucket_index][i]
+                return
