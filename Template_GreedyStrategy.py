@@ -44,3 +44,24 @@ def merge_intervals(intervals: List[List[int]]) -> List[List[int]]:
         else:  # 不相交，无法合并
             ans.append(p)  # 新的合并区间
     return ans
+
+
+def huffman_tree_cost(stones: List[int]) -> int:
+    """
+    计算使用哈夫曼树合并算法的总代价。
+
+    功能说明：
+        - 给定一个整数列表，每个整数可以视为一个带权重的叶节点。
+        - 哈夫曼树的构建过程中，每次选择两个权重最小的节点合并，生成一个新节点，其权重为两个子节点权重之和。
+        - 合并的总代价等于每次合并生成的新节点的权重之和。
+        - 此函数计算按照哈夫曼树合并策略从给定的节点列表构建完全二叉树所需要的总代价。
+    """
+    import heapq
+    heapq.heapify(stones)
+    total_cost = 0
+    while len(stones) > 1:
+        first_min = heapq.heappop(stones)
+        second_min = heapq.heappop(stones)
+        total_cost += first_min + second_min
+        heapq.heappush(stones, first_min + second_min)
+    return total_cost
