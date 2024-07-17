@@ -107,3 +107,22 @@ def isPalindrome(head: Optional[ListNode]) -> bool:
         second = second.next
         first = first.next
     return True
+
+
+def addTwoNumbers(l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+    """
+    对两个表示非负整数的单链表进行求和。链表的每个节点包含一个数字，数字以逆序方式存储，每个节点只能存储一位数字。
+    例如，(2 -> 4 -> 3) + (5 -> 6 -> 4) 应该返回 (7 -> 0 -> 8)，因为 342 + 465 = 807。
+    """
+    cur = dummy = ListNode()
+    carry = 0
+    while carry or l1 or l2:
+        carry += (l1.val if l1 else 0) + (l2.val if l2 else 0)
+        cur.next = ListNode(carry % 10)
+        cur = cur.next
+        carry //= 10
+        if l1:
+            l1 = l1.next
+        if l2:
+            l2 = l2.next
+    return dummy.next
