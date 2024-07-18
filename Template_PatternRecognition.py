@@ -271,3 +271,22 @@ def isRectangleOverlap(rec1: List[int], rec2: List[int]) -> bool:
     x1, y1, x2, y2 = rec1
     x3, y3, x4, y4 = rec2
     return (max(x1, x3) < min(x2, x4)) and (max(y1, y3) < min(y2, y4))
+
+
+def surfaceArea(grid: List[List[int]]) -> int:
+    """
+    计算由堆叠立方体形成的网格的总表面积。
+    """
+    n = len(grid)
+    area = 0
+    
+    for i in range(n):
+        for j in range(n):
+            if grid[i][j]:
+                area += 2 + 4 * grid[i][j]
+                if j > 0:
+                    area -= 2 * min(grid[i][j], grid[i][j-1])
+                if i > 0:
+                    area -= 2 * min(grid[i][j], grid[i-1][j])
+                    
+    return area
