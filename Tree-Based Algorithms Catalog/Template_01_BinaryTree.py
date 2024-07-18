@@ -179,3 +179,21 @@ def countNodes(root: Optional[TreeNode]) -> int:
         else:
             high = mid - 1
     return low
+
+
+def leafSimilar(root1: Optional[TreeNode], root2: Optional[TreeNode]) -> bool:
+    """
+    判断两棵二叉树的叶子节点序列是否相同。
+    """
+    isLeafNode = lambda node: not node.left and not node.right
+    def dfs(node: Optional[TreeNode]):
+        if isLeafNode(node):
+            yield node.val
+        else:
+            if node.left:  yield from dfs(node.left)
+            if node.right:  yield from dfs(node.right)
+    
+    if not root1 or not root2:
+        return root1 is root2
+    
+    return list(dfs(root1)) == list(dfs(root2))
