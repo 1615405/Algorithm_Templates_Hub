@@ -249,3 +249,16 @@ class MyHashMap:
             if k == key:
                 del self.buckets[bucket_index][i]
                 return
+
+
+def largestTriangleArea(points: List[List[int]]) -> float:
+    """
+    计算给定点集中所有可能的三角形的最大面积。
+    """
+    from itertools import combinations
+    def triangle_area(p1, p2, p3):
+        import numpy as np
+        matrix = np.array([p1 + [1], p2 + [1], p3 + [1]])
+        return 0.5 * abs(np.linalg.det(matrix))
+    
+    return max(triangle_area(p1, p2, p3) for p1, p2, p3 in combinations(points, 3))
