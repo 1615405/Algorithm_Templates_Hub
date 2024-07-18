@@ -150,3 +150,25 @@ def findMaxAverage(nums: List[int], k: int) -> float:
         total = total - nums[i - k] + nums[i]
         maxTotal = max(maxTotal, total)
     return maxTotal / k
+
+
+def shortestToChar(s: str, c: str) -> List[int]:
+    """
+    计算并返回字符串 s 中每个字符到最近的字符 c 的最短距离。
+    """
+    n = len(s)
+    ans = [float('inf')] * n
+    
+    prev = float('-inf')
+    for i in range(n):
+        if s[i] == c:
+            prev = i
+        ans[i] = min(ans[i], i - prev)
+    
+    prev = float('inf')
+    for i in range(n-1, -1, -1):
+        if s[i] == c:
+            prev = i
+        ans[i] = min(ans[i], prev - i)
+    
+    return ans
