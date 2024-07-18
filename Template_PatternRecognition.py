@@ -262,3 +262,12 @@ def largestTriangleArea(points: List[List[int]]) -> float:
         return 0.5 * abs(np.linalg.det(matrix))
     
     return max(triangle_area(p1, p2, p3) for p1, p2, p3 in combinations(points, 3))
+
+
+def isRectangleOverlap(rec1: List[int], rec2: List[int]) -> bool:
+    """
+    判断两个矩形是否重叠。重叠的判断依据是两个矩形在 x 轴和 y 轴上的投影都有交集。
+    """
+    x1, y1, x2, y2 = rec1
+    x3, y3, x4, y4 = rec2
+    return (max(x1, x3) < min(x2, x4)) and (max(y1, y3) < min(y2, y4))
