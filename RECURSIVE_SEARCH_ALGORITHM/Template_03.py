@@ -23,24 +23,21 @@ def islandPerimeter(grid: List[List[int]]) -> int:
     """
     计算在给定的二维网格中, 由1组成的岛屿的周长。
     """
-    m, n = len(grid), len(grid[0])
-    dx = [1, 0, -1, 0]
-    dy = [0, 1, 0, -1]
+    n, m = len(grid), len(grid[0])
     
     def dfs(x: int, y: int) -> int:
-        if x < 0 or x >= m or y < 0 or y >= n or grid[x][y] == 0:
+        if x < 0 or x >= n or y < 0 or y >= m or grid[x][y] == 0:
             return 1
         if grid[x][y] == 2:
             return 0
         grid[x][y] = 2
-        ans = 0
-        for k in range(4):
-            tx, ty = x + dx[k], y + dy[k]
-            ans += dfs(tx, ty)
-        return ans
+        perimeter = 0
+        for dx, dy in ((x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1)):
+            perimeter += dfs(dx, dy)
+        return perimeter
     
-    result = 0
-    for i in range(m):
-        for j in range(n):
-            result += dfs(i, j) if grid[i][j] == 1 else 0
-    return result
+    perimeter = 0
+    for i in range(n):
+        for j in range(m):
+            perimeter += dfs(i, j) if grid[i][j] == 1 else 0
+    return perimeter
