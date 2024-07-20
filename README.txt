@@ -6,7 +6,7 @@
     LeetCode 0717 -> 1比特与2比特字符
     LeetCode 0746 -> 使用最小花费爬楼梯
     LeetCode 1553 -> 吃掉N个橘子的最少天数
-    LeetCode 2998 -> 是X和Y相等的最少操作次数
+    LeetCode 2998 -> 使X和Y相等的最少操作次数
 
 【FloodFill】
     LeetCode 0200 -> 岛屿数量
