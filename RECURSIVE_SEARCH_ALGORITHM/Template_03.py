@@ -93,3 +93,29 @@ def numIslands(grid: List[List[str]]) -> int:
                 bfs(i, j)
                 ans += 1
     return ans
+
+
+def closedIsland(grid: List[List[int]]) -> int:
+    """
+    计算二维网格中完全被水包围的岛屿数量。岛屿定义为四面被水 1 包围的连续区域 0
+    """
+    n, m = len(grid), len(grid[0])
+    if n < 3 or m < 3:  return 0
+
+    def dfs(x: int, y: int) -> None:
+        if x == 0 or x == n - 1 or y == 0 or y == m - 1:
+            nonlocal closed
+            closed = False
+        grid[x][y] = 1
+        for dx, dy in (x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1):
+            if 0 <= dx < n and 0 <= dy < m and grid[dx][dy] == 0:
+                dfs(dx, dy)
+    
+    ans = 0
+    for i in range(n):
+        for j in range(m):
+            if grid[i][j] == 0:
+                closed = True
+                dfs(i, j)           
+                ans += closed
+    return ans
