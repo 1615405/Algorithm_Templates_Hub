@@ -3,6 +3,7 @@
     LeetCode 0401 -> 二进制手表
 
 【记忆化搜索】
+    LeetCode 0329 -> 矩阵中的最长递增路径
     LeetCode 0717 -> 1比特与2比特字符
     LeetCode 0746 -> 使用最小花费爬楼梯
     LeetCode 1553 -> 吃掉N个橘子的最少天数
