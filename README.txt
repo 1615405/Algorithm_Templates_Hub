@@ -1,17 +1,22 @@
 【二进制枚举】
-    LeetCode 401 -> 二进制手表
+    LeetCode 0401 -> 二进制手表
 
 
 【记忆化搜索】
-    LeetCode 717 -> 1比特与2比特字符
-    LeetCode 746 -> 使用最小花费爬楼梯
+    LeetCode 0717 -> 1比特与2比特字符
+    LeetCode 0746 -> 使用最小花费爬楼梯
+    LeetCode 1553 -> 吃掉N个橘子的最少天数
+    LeetCode 2998 -> 是X和Y相等的最少操作次数
 
 【FloodFill】
-    LeetCode 200 -> 岛屿数量
-    LeetCode 463 -> 岛屿的周长
-    LeetCode 695 -> 岛屿的最大面积
-    LeetCode 733 -> 图像渲染
+    LeetCode 0200 -> 岛屿数量
+    LeetCode 0463 -> 岛屿的周长
+    LeetCode 0695 -> 岛屿的最大面积
+    LeetCode 0733 -> 图像渲染
+
+【双向BFS】
+    
 
 
 【字符串】
-    LeetCode 14 -> 最长公共前缀
+    LeetCode 0014 -> 最长公共前缀
