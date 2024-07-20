@@ -119,3 +119,34 @@ def closedIsland(grid: List[List[int]]) -> int:
                 dfs(i, j)           
                 ans += closed
     return ans
+
+
+def solve(board: List[List[str]]) -> None:
+    """
+    直接修改给定的二维棋盘，将所有不连接到边界的 'O' 转换成 'X'。
+    从棋盘的边界开始，使用深度优先搜索（DFS）标记所有连接到边界的 'O'。
+    """
+    n, m = len(board), len(board[0])
+    def dfs(x: int, y: int) -> None:
+        if x < 0 or x >= n or y < 0 or y >= m or board[x][y] != "O":
+            return
+        board[x][y] = "A"
+        dfs(x + 1, y)
+        dfs(x - 1, y)
+        dfs(x, y + 1)
+        dfs(x, y - 1)
+    
+    for i in range(n):
+        dfs(i, 0)
+        dfs(i, m - 1)
+    
+    for j in range(m - 1):
+        dfs(0, j)
+        dfs(n - 1, j)
+    
+    for i in range(n):
+        for j in range(m):
+            if board[i][j] == "A":
+                board[i][j] = "O"
+            elif board[i][j] == "O":
+                board[i][j] = "X"
