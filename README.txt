@@ -13,6 +13,7 @@
     LeetCode 0463 -> 岛屿的周长
     LeetCode 0695 -> 岛屿的最大面积
     LeetCode 0733 -> 图像渲染
+    LeetCode 1254 -> 统计封闭岛屿的数量
 
 【广度优先搜索】
     LeetCode 2059 -> 转化数字的最小运算数 (双向BFS)
