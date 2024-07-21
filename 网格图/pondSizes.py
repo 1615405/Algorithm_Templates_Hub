@@ -26,3 +26,39 @@ class Solution:
                     ans.append(dfs(i, j))
         
         return sorted(ans)
+
+
+
+class Solution:
+    def pondSizes(self, land: List[List[int]]) -> List[int]:
+        n, m = len(land), len(land[0])
+        ans = list()
+
+        def neighbor(x: int, y: int) -> Tuple[int, int]:
+            for dx in range(-1, 2):
+                for dy in range(-1, 2):
+                    if dx == 0 and dy == 0:
+                        continue
+                    nx, ny = x + dx, y + dy
+                    if 0 <= nx < n and 0 <= ny < m:
+                        yield nx, ny
+        
+        def bfs(x: int, y: int) -> int:
+            q = deque([(x, y)])
+            land[x][y] = 1
+            cnt = 1
+            while q:
+                xx, yy = q.popleft()
+                for dx, dy in neighbor(xx, yy):
+                    if land[dx][dy] == 0:
+                        q.append((dx, dy))
+                        land[dx][dy] = 1
+                        cnt += 1
+            return cnt
+        
+        for i in range(n):
+            for j in range(m):
+                if land[i][j] == 0:
+                    ans.append(bfs(i, j))
+        
+        return sorted(ans)
