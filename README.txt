@@ -2,7 +2,7 @@
 LeetCode 0200 -> 岛屿的数量
 LeetCode 0463 -> 岛屿的周长 (DFS计数)
 LeetCode 0695 -> 岛屿的最大面积
-LeetCode 1020 -> 飞地的数量 (Rating 1615)
+LeetCode 1020 -> 飞地的数量 (Rating 1615) (多源BFS)
 LeetCode 1034 -> 边界着色 (Rating 1579)
 LeetCode 2658 -> 网格中鱼的最大数目 (Rating 1490)
 面试题 16.19 -> 水域大小 (八连通)
