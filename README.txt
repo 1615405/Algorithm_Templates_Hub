@@ -3,6 +3,7 @@ LeetCode 0130 -> 被围绕的区域
 LeetCode 0200 -> 岛屿的数量
 LeetCode 0463 -> 岛屿的周长 (DFS计数)
 LeetCode 0695 -> 岛屿的最大面积
+LeetCode 0994 -> 腐烂的橘子 (Rating 1433) (多源BFS) (最短路)
 LeetCode 1020 -> 飞地的数量 (Rating 1615) (多源BFS)
 LeetCode 1034 -> 边界着色 (Rating 1579)
 LeetCode 1254 -> 统计封闭岛屿的数目 (Rating 1659)
